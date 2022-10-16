@@ -119,6 +119,9 @@
       {% if author.wechat %}
         <li><a href="{{ author.wechat  }}"><i class="fas fa-comment"></i> wechat</a></li>
       {% endif %}
+      {% if author.zhihu %}
+        <li><a href="https://www.zhihu.com/people/{{ author.zhihu  }}"><i class="fas fa-comment-alt"></i> zhihu</a></li>
+      {% endif %}
       {% if author.impactstory %}
         <li><a href="{{ author.impactstory }}"><i class="ai ai-impactstory ai-fw"></i> Impactstory</a></li>
       {% endif %}
