@@ -11,8 +11,8 @@ redirect_from:
 
 Education
 ======
-* B.S. in MSE, Huazhong University of Science and technology, 2017-2021
-* M.S. in 総合機械工学専攻, Waseda University, 2022-2024
+* B.S. in Mechanical Science & Engineering, Huazhong University of Science and technology, 2017-2021
+* M.S. in Mechanical Engineering, Waseda University, 2022-2024
 
 
 
@@ -40,7 +40,7 @@ Skills
 * Python
 * IEC61113-3
     * TwinCAT 3.1
-* unity
+* Unity3D
    
 
 Publications
