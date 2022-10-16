@@ -4,12 +4,12 @@ collection: publications
 permalink: /publication/2021-07-15-paper-title-number-1
 excerpt: 'In order to realize the diversified development and innovation of online experiments and experimental teaching of industrial robots, a remote experimental platform for industrial robots based on B/S architecture is designed. The D-H method is used to establish the motion equation of the ABB IRB120 industrial robot, which can obtain the forward and inverse kinematic equations through the transformation of the homogeneous matrix. The robot 3D simulation system using HTML5 language and X3DOM technology realizes real-time graphic simulation and remote control of the robot.'
 date: 2021-07-15
-venue: 'Journal 1'
-paperurl: 'http://academicpages.github.io/files/paper1.pdf'
-citation: 'Your Name, You. (2009). &quot;Paper Title Number 1.&quot; <i>Journal 1</i>. 1(1).'
+venue: '2021 29th Mediterranean Conference on Control and Automation (MED)'
+paperurl: 'https://ieeexplore.ieee.org/document/9480211'
+citation: 'H. Tao and S. Miaohui, "A Remote Experiment Platform based on HTML5 for Industrial Robots," 2021 29th Mediterranean Conference on Control and Automation (MED), 2021, pp. 920-923, doi: 10.1109/MED51440.2021.9480211.'
 ---
-This paper is about the number 1. The number 2 is left for future work.
+In order to realize the diversified development and innovation of online experiments and experimental teaching of industrial robots, a remote experimental platform for industrial robots based on B/S architecture is designed. The D-H method is used to establish the motion equation of the ABB IRB120 industrial robot, which can obtain the forward and inverse kinematic equations through the transformation of the homogeneous matrix. The robot 3D simulation system using HTML5 language and X3DOM technology realizes real-time graphic simulation and remote control of the robot.
 
-[Download paper here](http://academicpages.github.io/files/paper1.pdf)
+[Download paper here](https://ieeexplore.ieee.org/document/9480211)
 
-Recommended citation: Your Name, You. (2009). "Paper Title Number 1." <i>Journal 1</i>. 1(1).
+Recommended citation: H. Tao and S. Miaohui, "A Remote Experiment Platform based on HTML5 for Industrial Robots," 2021 29th Mediterranean Conference on Control and Automation (MED), 2021, pp. 920-923, doi: 10.1109/MED51440.2021.9480211.
