@@ -11,9 +11,11 @@ redirect_from:
 
 Education
 ======
-* B.S. in GitHub, GitHub University, 2012
-* M.S. in Jekyll, GitHub University, 2014
-* Ph.D in Version Control Theory, GitHub University, 2018 (expected)
+* B.S. in MSE, Huazhong University of Science and technology, 2017-2021
+* M.S. in 総合機械工学専攻, Waseda University, 2022-2024
+
+
+
 
 Work experience
 ======
@@ -29,12 +31,17 @@ Work experience
   
 Skills
 ======
-* Skill 1
-* Skill 2
-  * Sub-skill 2.1
-  * Sub-skill 2.2
-  * Sub-skill 2.3
-* Skill 33333
+* Matlab
+* C/C++
+  * STM32
+    * keil5/STM32CubeMX
+  * Qt
+
+* Python
+* IEC61113-3
+    * TwinCAT 3.1
+* unity
+   
 
 Publications
 ======
