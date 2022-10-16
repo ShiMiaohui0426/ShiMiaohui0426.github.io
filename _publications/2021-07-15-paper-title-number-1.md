@@ -1,7 +1,7 @@
 ---
 title: "A Remote Experiment Platform based on HTML5 for Industrial Robots"
 collection: publications
-permalink: /publication/A-Remote-Experiment-Platform-based-on-HTML5-for-Industrial-Robots
+permalink: /publication/2021-07-15-paper-title-number-1
 excerpt: 'In order to realize the diversified development and innovation of online experiments and experimental teaching of industrial robots, a remote experimental platform for industrial robots based on B/S architecture is designed. The D-H method is used to establish the motion equation of the ABB IRB120 industrial robot, which can obtain the forward and inverse kinematic equations through the transformation of the homogeneous matrix. The robot 3D simulation system using HTML5 language and X3DOM technology realizes real-time graphic simulation and remote control of the robot.'
 date: 2021-07-015
 venue: 'Journal 1'
