@@ -1,6 +1,6 @@
 ---
 layout: archive
-title: "CV"
+title: "Personal Resume"
 permalink: /cv/
 author_profile: true
 redirect_from:
@@ -8,6 +8,7 @@ redirect_from:
 ---
 
 {% include base_path %}
+
 
 Education
 ======
@@ -34,6 +35,17 @@ Work experience
   * Waseda University
   * Duties included: Responsible for answering and instructing questions and marking exams in programming-related courses
   * Supervisor: Professor Iwata
+  
+
+Languages
+======
+* Chinses-Native
+* English-Professional
+  * TOEFL 91
+  * CET-4/CET-6 Passed
+* Japanese-Professional
+  * JLPT N2
+  * JLPT N1(Coming up)
   
 Skills
 ======
