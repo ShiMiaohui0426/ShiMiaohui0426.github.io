@@ -9,7 +9,7 @@ redirect_from:
 ---
 {% include base_path %}
   <ul>
-  {% include resume.html %}
+  {% include "{{ url }}/resume.html" %}
   </ul>
 
 
