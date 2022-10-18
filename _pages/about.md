@@ -8,8 +8,20 @@ redirect_from:
   - /about.html
 ---
 {% include base_path %}
+
+
+Publications
+======
+  <ul>{% for post in site.publications %}
+    {% include archive-single-cv.html %}
+  {% endfor %}</ul>
+  
+Experiences
+======
   <ul>
-  {% include "{{ url }}/resume.html" %}
+  {% for post in site.experience %}
+  {% include archive-single.html %}
+{% endfor %}
   </ul>
 
 
