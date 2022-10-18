@@ -9,6 +9,8 @@ redirect_from:
 ---
 {% include base_path %}
 
+I am a student come from China. Now, I study as a Graduate Student in Waseda University supervised by Professor.Iwata in Dept. of Mordern ENgineering.
+My research topic is about control, VR, Multi-Presence.
 
 Publications
 ======
