@@ -278,14 +278,14 @@ plugins:
   - jekyll-gist
   - jekyll-feed
   - jekyll-redirect-from
-  - jekyll-mermaid
+  - jekyll-spaceship
 # mimic GitHub Pages with --safe
 whitelist:
   - jekyll-paginate
   - jekyll-sitemap
   - jekyll-gist
   - jekyll-feed
-  - jekyll-mermaid
+  - jekyll-spaceship
   - jemoji
 
 
