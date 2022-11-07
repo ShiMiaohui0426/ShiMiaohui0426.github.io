@@ -70,6 +70,8 @@ Publications
   
 Experiences
 ======
+![alt ProjectExperience](/images/Project%20Experience.png)
+
   <ul>
   {% for post in site.experience %}
   {% include archive-single.html %}
