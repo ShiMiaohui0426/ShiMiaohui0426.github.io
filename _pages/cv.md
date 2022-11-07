@@ -14,11 +14,19 @@ redirect_from:
 Educationn
 ======
 * B.S. in Mechanical Science & Engineering, Huazhong University of Science and technology, 2017-2021
-![alt hust](https://gimg3.baidu.com/search/src=https%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Ff9dcd100baa1cd11bbdcbc6fb812c8fcc3ce2d13.jpg&refer=http%3A%2F%2Fwww.baidu.com&app=2021&size=w240&n=0&g=0n&q=75&fmt=auto?sec=1666112400&t=76e5e57dafe0c88d7ee68da24f169624)
+
+<center>
+<img src='https://gimg3.baidu.com/search/src=https%3A%2F%2Fimgsrc.baidu.com%2Fforum%2Fpic%2Fitem%2Ff9dcd100baa1cd11bbdcbc6fb812c8fcc3ce2d13.jpg&refer=http%3A%2F%2Fwww.baidu.com&app=2021&size=w240&n=0&g=0n&q=75&fmt=auto?sec=1666112400&t=76e5e57dafe0c88d7ee68da24f169624'>
+
+</center>
+
 * M.S. in Mechanical Engineering, Waseda University, 2022-2024
+  
+  
+<center>
+<img src='https://www.waseda.jp/top/assets/themes/waseda-template-engine-main/img/logo-header-off.png'>
 
-![alt waseda](https://www.waseda.jp/top/assets/themes/waseda-template-engine-main/img/logo-header-off.png)
-
+</center>
 
 
 Work experience
