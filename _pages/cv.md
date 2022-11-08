@@ -10,7 +10,9 @@ redirect_from:
 
 {% include base_path %}
 
+
 [Download](/files/SMH_RESUME.pdf)
+
 
 Education
 ======
