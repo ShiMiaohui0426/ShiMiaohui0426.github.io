@@ -76,7 +76,7 @@ Publications
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
   
-Experiences
+Project Experiences
 ======
 ![alt ProjectExperience](/images/Project%20Experience.png)
 
