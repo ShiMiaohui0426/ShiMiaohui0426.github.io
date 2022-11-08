@@ -51,7 +51,7 @@ Work experience
 
 Languages
 ======
-* Chinses-Native
+* Chinese-Native
 * English-Professional
   * TOEFL 91
   * CET-4/CET-6 Passed
