@@ -11,7 +11,7 @@ redirect_from:
 {% include base_path %}
 
 
-Educationn
+Education
 ======
 * B.S. in Mechanical Science & Engineering, Huazhong University of Science and technology, 2017-2021
 
