@@ -50,110 +50,85 @@ excerpt: "Bottle cap testing machine <br/><img src='https://raw.githubuserconten
 
 ## 下位机
 
-### AD7606
+### TwinCAT
 
-AD7606除了与STM32f4通过SPI连接之外，另外还有一个触发脚用于接收PWM信号，在PWM的每个上升沿触发采集。
+如上图所示，TwinCAT主要连接了相机、光源、光电传感器、电机等设备。在PLC程序中主要需要完成以下功能：
 
-### 双缓冲设计
+1. 根据光电传感器的信号变化，计算是否有瓶盖通过
+2. 如果有瓶盖通过，则在传送皮带通过一定距离后触发相机拍照
+3. 控制电机完成连续运动/点动/移动到特定位置等功能
+4. 接收上位机的图像处理结果，控制气阀将不良品剔除
+5. 根据一些硬件IO
 
-在该系统中，为了能够最大程度上将设备的性能利用起来，并且保证采集到的数据的连续性，在发送数据时，需要使用到双缓冲的设计方法。
+### 环形数据结构设计
 
-首先定义需要使用到的缓冲数组
-
-```c
-#define TX_BUF_LEN_USB 1024*16
-uint8_t txBuf_usb[2][TX_BUF_LEN_USB];
-```
-
-在读取到数据后，将数据填写入缓冲区。
+在PLC程序中，采用面向对象的设计思路，对于每一个瓶盖，都将其视为一个对象，代码如下：
 
 ```c
-AD7606_Read8CH();	
-		if(AD_CH_ctrl & AD_CH1){
-	#ifdef AD_CH1
-	txBuf_usb[ctrl_word][txCount_usb++]=AD7606_BUF.shortbuf[0];
-	txBuf_usb[ctrl_word][txCount_usb++]=AD7606_BUF.shortbuf[1];
-	#endif
-	}
-//... 
-//...
-//...
-	if(AD_CH_ctrl & AD_CH8){
-	#ifdef AD_CH8
-	txBuf_usb[ctrl_word][txCount_usb++]=AD7606_BUF.bytebuf[14];
-	txBuf_usb[ctrl_word][txCount_usb++]=AD7606_BUF.bytebuf[15];	
-	#endif
-	}
+STRUCT
+	ID:INT;
+	InPostion:LREAL:=99999999;
+	TestResult:BOOL;
+END_STRUCT
+END_TYPE
 ```
 
-在发送函数中，实现缓冲区的交换
+其中，ID是瓶盖的编号，InPostion是瓶盖进入传送带的位置，TestResult是瓶盖的检测结果。在PLC编程中，不允许动态分配内存，因此，需要在程序开始时就定义好数组的大小。为了方便，我将环形数组的大小定义为100。程序会不停的使用这个数组，因此，需要定义一个head和tail变量来记录数组的头尾位置。代码如下：
 
 ```c
-void AD7606_USB_Send(void){
-	if(txCount_usb >= TX_BUF_LEN_USB)
-	{ ctrl_word = !ctrl_word;
-		txCount_usb = 0;
-		UsbSendData(txBuf_usb[ctrl_word],TX_BUF_LEN_USB);//USB发送
-		LED_Toggle();
-	}
-};
+VAR
+	Queue: ARRAY [0..99] OF Product;
+	head:INT:=0;
+	tail:INT:=0;
+	CameraOrder:INT:=0;//相机返回结果的位置
+	CameraExeOrder:INT:=0;
+	ElementNum:INT:=0;
+END_VAR
 ```
 
-### 时钟同步
+该环形数组有另外分别实现了进入队列/出队列/获取队首/获取队尾等功能。在程序中，每当有瓶盖进入传送带时，就将其加入队列，每当有瓶盖离开传送带时，就将其从队列中移除。这样，就可以通过队列中的瓶盖对象来记录瓶盖的位置、检测结果等信息。
+当接收到上位机发送的结果时，将其ID与队列中的瓶盖对象的ID进行比较，如果相同，则将该瓶盖对象的TestResult赋值为上位机发送的结果。当瓶盖通过剔除位时，如果该瓶盖对象的TestResult为TRUE（不良品），则将其从队列中移除。
 
-本系统中共有两个时钟被使用。时钟1是用于生成固定频率的PWM波用于触发采集。时钟2是用于驱动SPI读取采集结果。根据AD7606的官方手册，选择了在转换期间读取的方法。
-<center>
-<img src='https://raw.githubusercontent.com/ShiMiaohui0426/ShiMiaohui0426.github.io/master/_experience/2019-Fall-1/Untitled%201.png'>
-
-</center>
-<center>
-图3 AD7606采样时读取-时序图
-</center>
-在SPI读取数据时，触发其执行的时钟并不能继续计时，如果不做处理的话，每次的读取时间都会延后。举个例子，第一次读取的时候，采集和读取在同一时间进行。到了第二次，读取的时间就会向后延迟t秒，t代表读取所花费的时间。当达到某个值后，就会丢掉一个数据。为了避免这种情况，我们在每次读取结束之后，将时钟2的计数器设置为时钟1的值，这样就能保证采集和读取总是同步触发了。
+### ADS通信
+TwinCAT和上位机之间的通信采用ADS协议。在TwinCAT中，设计了两组数据结构分别用于上位机控制下位机的运行状态和接收图像处理的结果。分别为如下代码：
 
 ```c
-TIM2->ARR=TIM1->ARR;
+STRUCT
+	ctrlword :INT;
+	stateword:INT;
+	TarACSPos: ARRAY[0..11] OF LREAL;
+	ActACSPos: ARRAY[0..11] OF LREAL;
+END_STRUCT
+END_TYPE
 ```
+
+```c
+STRUCT
+	isValid:BOOL;
+	ID:INT;
+	Result:BOOL;
+END_STRUCT
+END_TYPE
+```
+
+根据ADS协议，TwinCAT会将这两组数据结构在内存中的地址发送给上位机，上位机通过这两个地址来读写数据。
 
 ## 上位机
 
-上位机需要通过USB来与下位机通信，但是由于Matlab的性能限制，如果将得到的原始数据放在Matlab中处理的话，将会十分耗时。于是使用了Mex混合编程的方法，使用C++与下位机通信，并将其封装成Matlab函数。编译得到的mexw64文件可以很方便的部署到各个设备上。
 
-### Matlab
-对于接受这个课程的学生来说，他们中的大多数都是首次接触到Matlab编程。于是作为课程开发者，我的另一项任务就是为他们提供例程与教程。
+上位机基于Qt和OpenCV开，以华中科技大学机械学院iCAT团队核心成员汪迪开发的RoboLab为基础，进行了二次开发。采用插件式的设计思路，将上位机分为多个模块，每个模块负责一个功能。在本项目中，主要包括以下模块：
+
+1. 相机模块
+2. 视觉处理模块
+3. 通信模块
+
+采用拖动式的操作模式，大大降低了学生学习算法时的挫败感。
 <center>
-<img src='https://raw.githubusercontent.com/ShiMiaohui0426/ShiMiaohui0426.github.io/master/_experience/2019-Fall-1/matlab.png'>
+<img src='https://raw.githubusercontent.com/ShiMiaohui0426/ShiMiaohui0426.github.io/master/_experience/2021-Spring-1/LeafVision.png'>
 </center>
 <center>
-图4 Matlab AppDesigner的例程
+图3 我们研发的视觉软件
 </center>
-
-除了有关AppDesigner的教程之外，仍需要为参加这门课的学生提供采集卡的调用例程。
-
-``` MATLAB
-
-state=USBDAQ_opencard();%打开采集卡
-Fs=5000;
-N=1000;
-CH_on=zeros(1,8);
-CH_on(8)=1;
-CH_on(1)=1;
-%这时通道控制字为1010 0000，通道号由高位向低位排布，八通道由第一位控制，七通道由第二位控制，以此类推
-%传递参数时，需要将二进制的数转换成十进制的数
-%未被使能的通道将会回传一堆0
-CHcode=CH_on(8)*128+CH_on(7)*64+CH_on(6)*32+CH_on(5)*16+CH_on(4)*8+CH_on(3)*4+CH_on(2)*2+CH_on(1);
-data=USBDAQ_readdata(N,Fs,CHcode);%该函数返回N*8的2维数组
-CH1data=data(:,1);%获取通道1数据
-CH2data=data(:,2);%获取通道2数据
-CH3data=data(:,3);%获取通道3数据
-CH4data=data(:,4);%获取通道4数据
-CH5data=data(:,5);%获取通道5数据
-CH6data=data(:,6);%获取通道6数据
-CH7data=data(:,7);%获取通道7数据
-CH8data=data(:,8);%获取通道8数据
-USBDAQ_closecard();%关闭采集卡
-
-```
 
 # 项目结果
 
