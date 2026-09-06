@@ -1,13 +1,17 @@
 # main links links
 main:
-  - title: "Personal Resume/简历"
-    url: /cv/
-
+  - title: "About"
+    url: /
+  - title: "Projects"
+    url: /experience/
   - title: "Publications"
     url: /publications/
-
-  - title: "Research & Project"
-    url: /experience/ 
+  - title: "Patents"
+    url: /patents/
+  - title: "CV"
+    url: /cv/
+  - title: "中文"
+    url: /zh/
 
 #  - title: "Talks"
 #    url: /talks/    

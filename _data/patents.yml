@@ -1,0 +1,100 @@
+- id: gds-subpixel
+  application: "202510059926.6"
+  publications: "CN119987127A / CN119987127B"
+  applicant: "中国科学院上海光学精密机械研究所；台州光电产业创新中心"
+  url: "https://patents.google.com/patent/CN119987127B/zh"
+  pdf: "https://patentimages.storage.googleapis.com/78/a5/04/749d62b1908648/CN119987127A.pdf"
+  en:
+    title: "Subpixel image processing based on grid-partitioned mask regions"
+    status: "Invention patent · granted 20 March 2026"
+    note: "Filed in 2025. The 2026 date is the grant date, not a new 2026 project result. The PDF is the application publication (A)."
+  zh:
+    title: "一种基于掩模版网格化区域的亚像素图像处理方法及系统"
+    status: "发明专利 · 2026 年 3 月 20 日授权"
+    note: "申请于 2025 年；2026 年为授权日期，不作为新增的 2026 年项目成果。PDF 链接为申请公开文本（A）。"
+- id: tactile-jp
+  application: "特願2024-059283"
+  publications: "JP2025156708A / 特開2025-156708"
+  applicant: "早稲田大学；東京女子医科大学"
+  url: "https://www.j-platpat.inpit.go.jp/"
+  japanese: true
+  en:
+    title: "Vision-based tactile sensor and its manufacturing method / 視触覚センサ及びその製造方法"
+    status: "Japanese patent application · published 15 October 2025"
+    note: "The inventor name appears as 施妙輝 in the Japanese record."
+  zh:
+    title: "視触覚センサ及びその製造方法（视触觉传感器及其制造方法）"
+    status: "日本专利申请 · 2025 年 10 月 15 日公开"
+    note: "日本记录中的发明人姓名写作“施妙輝”。"
+- id: reaction-cup-invention
+  application: "202410537845.8"
+  publications: "CN118275340A / CN118275340B"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN118275340B/zh"
+  pdf: "https://patentimages.storage.googleapis.com/f5/f6/61/7ceee6e78c80b8/CN118275340B.pdf"
+  en:
+    title: "Fully automatic visual inspection machine and inspection method for reaction cups"
+    status: "Invention patent · granted 22 April 2025"
+  zh:
+    title: "一种反应杯全自动视觉检测机及其检测方法"
+    status: "发明专利 · 2025 年 4 月 22 日授权"
+- id: reaction-cup-utility
+  application: "202420933602.1"
+  publications: "CN222506136U"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN222506136U/zh"
+  pdf: "https://patentimages.storage.googleapis.com/c6/35/a3/58fb39ad28c6cd/CN222506136U.pdf"
+  en:
+    title: "Fully automatic visual inspection machine for reaction cups"
+    status: "Utility model · grant publication 18 February 2025"
+  zh:
+    title: "一种反应杯全自动视觉检测机"
+    status: "实用新型 · 2025 年 2 月 18 日授权公告"
+- id: transparent-tube-feeder
+  application: "202323359650.9"
+  publications: "CN221190481U"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN221190481U/zh"
+  pdf: "https://patentimages.storage.googleapis.com/43/14/5d/900c4f44f3cac8/CN221190481U.pdf"
+  en:
+    title: "Automatic feeding device for transparent tubes"
+    status: "Utility model · grant publication 21 June 2024"
+  zh:
+    title: "一种透明管自动上料装置"
+    status: "实用新型 · 2024 年 6 月 21 日授权公告"
+- id: medical-tube-inspection
+  application: "202320916701.4"
+  publications: "CN220289436U"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN220289436U/zh"
+  pdf: "https://patentimages.storage.googleapis.com/1f/96/1b/a7476857f3987e/CN220289436U.pdf"
+  en:
+    title: "Full-surface visual inspection machine for medical test tubes"
+    status: "Utility model · grant publication 2 January 2024"
+  zh:
+    title: "一种医疗试管全外观视觉检测机"
+    status: "实用新型 · 2024 年 1 月 2 日授权公告"
+- id: transparent-tube-inspection
+  application: "202310389976.1"
+  publications: "CN116273933A"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN116273933A/zh"
+  pdf: "https://patentimages.storage.googleapis.com/c5/99/06/4e054fd3292dac/CN116273933A.pdf"
+  en:
+    title: "Visual inspection and sorting machine for transparent tubes"
+    status: "Invention application · publication 23 June 2023"
+  zh:
+    title: "一种透明管视觉检测筛选机"
+    status: "发明申请 · 2023 年 6 月 23 日公开"
+- id: ceramic-inspection
+  application: "202210591287.4"
+  publications: "CN115178488A"
+  applicant: "台州市松科自动化科技有限公司"
+  url: "https://patents.google.com/patent/CN115178488A/zh"
+  pdf: "https://patentimages.storage.googleapis.com/64/9e/d2/5676301b44759e/CN115178488A.pdf"
+  en:
+    title: "Automatic inspection and sorting equipment for ceramic sheets"
+    status: "Invention application · publication 14 October 2022"
+  zh:
+    title: "一种陶瓷片的自动检测筛选设备"
+    status: "发明申请 · 2022 年 10 月 14 日公开"

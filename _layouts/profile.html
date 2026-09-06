@@ -1,0 +1,43 @@
+<!doctype html>
+{% assign lang = page.lang | default: 'en' %}
+{% assign ui = site.data.profile[lang] %}
+{% assign prefix = '' %}{% if lang == 'zh' %}{% assign prefix = '/zh' %}{% endif %}
+<html lang="{% if lang == 'zh' %}zh-CN{% else %}en{% endif %}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{{ page.title | escape }} — {{ site.title | escape }}</title>
+  <meta name="description" content="{{ page.description | default: ui.description | escape }}">
+  <link rel="canonical" href="{{ page.url | absolute_url }}">
+  {% if page.alternate %}<link rel="alternate" hreflang="{% if lang == 'zh' %}en{% else %}zh-CN{% endif %}" href="{{ page.alternate | absolute_url }}">{% endif %}
+  <link rel="alternate" hreflang="{% if lang == 'zh' %}zh-CN{% else %}en{% endif %}" href="{{ page.url | absolute_url }}">
+  <link rel="stylesheet" href="{{ '/assets/css/profile.css' | relative_url }}">
+  <meta name="theme-color" content="#102d48">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="{{ page.title | escape }} — {{ site.title | escape }}">
+  <meta property="og:description" content="{{ page.description | default: ui.description | escape }}">
+  <meta property="og:url" content="{{ page.url | absolute_url }}">
+  {% if site.og_image %}<meta property="og:image" content="{{ site.og_image | prepend: '/images/' | absolute_url }}">{% endif %}
+</head>
+<body>
+  <a class="skip-link" href="#main">{{ ui.skip }}</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="wordmark" href="{{ prefix | append: '/' | relative_url }}">Miaohui Shi <span lang="zh-CN">施妙辉</span></a>
+      <nav aria-label="{{ ui.navigation }}">
+        {% for item in ui.nav %}
+        <a href="{{ prefix | append: item.path | relative_url }}"{% if page.section == item.id %} aria-current="page"{% endif %}>{{ item.label }}</a>
+        {% endfor %}
+      </nav>
+      {% if page.alternate %}<a class="language-link" href="{{ page.alternate | relative_url }}" lang="{% if lang == 'zh' %}en{% else %}zh-CN{% endif %}" hreflang="{% if lang == 'zh' %}en{% else %}zh-CN{% endif %}">{% if lang == 'zh' %}English{% else %}中文{% endif %}</a>{% endif %}
+    </div>
+  </header>
+  <main id="main" class="site-main">
+    {{ content }}
+  </main>
+  <footer class="site-footer">
+    <div><strong>Miaohui Shi · 施妙辉</strong><p>{{ ui.footer }}</p></div>
+    <div class="footer-links"><a href="https://github.com/ShiMiaohui0426">GitHub</a><a href="https://www.linkedin.com/in/miaohui-shi-721756195/">LinkedIn</a><span>{{ ui.updated }}</span></div>
+  </footer>
+</body>
+</html>

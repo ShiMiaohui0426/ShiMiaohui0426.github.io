@@ -1,0 +1,12 @@
+{% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.profile[lang] %}
+<div class="page-intro"><p class="eyebrow">Miaohui Shi / 施妙辉</p><h1>{{ ui.patents_title }}</h1><p>{{ ui.patents_intro }}</p></div>
+<p class="note">{{ ui.patents_note }}</p>
+{% for patent in site.data.patents %}{% assign item = patent[lang] %}
+<article class="patent" id="{{ patent.id }}">
+  <p class="metadata">{{ item.status }}</p><h2>{{ item.title }}</h2>
+  <p><strong>{{ ui.patent_publications }}:</strong> {{ patent.publications }}<br><strong>{{ ui.application }}:</strong> {{ patent.application }}<br><strong>{{ ui.applicant }}:</strong> {{ patent.applicant }}</p>
+  {% if item.note %}<p class="note">{{ item.note }}</p>{% endif %}
+  {% if patent.japanese %}<p class="note">{{ ui.japan_note }}</p>{% endif %}
+  <div class="link-row"><a href="{{ patent.url }}">{% if patent.japanese %}{{ ui.jp_search }}{% else %}{{ ui.patent_record }}{% endif %}</a>{% if patent.pdf %}<a href="{{ patent.pdf }}">{{ ui.patent_pdf }}</a>{% endif %}</div>
+</article>
+{% endfor %}

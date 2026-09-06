@@ -1,0 +1,60 @@
+- id: tactile-2024
+  year: 2024
+  title: "High-Speed Vision-Based Haptic Sensor for Robotic Dermatological Palpation: Force Sensing Method Using Asymmetric Stiffness Coefficient Matrix"
+  venue: "ICAT-EGVE 2024"
+  authors: "Fumihiro Kato, **Miaohui Shi**, Kaito Kamishima, Hiroyasu Iwata"
+  doi: "10.2312/egve.20241368"
+  url: "https://diglib.eg.org/items/2ed76d62-d9a6-47db-b621-c19b3688daef"
+  pdf: "https://diglib.eg.org/server/api/core/bitstreams/234ed55f-a7c9-4fb5-9d00-52a2b1f023b4/content"
+  en:
+    summary: "High-speed visual marker processing and force estimation for a vision-based tactile sensor."
+    contribution: "Independently developed the algorithmic principles, implementation, performance tuning and front-end UI. Second author."
+  zh:
+    summary: "面向视触觉传感器的高速视觉标记点处理与力估计方法。"
+    contribution: "独立完成算法原理设计、代码实现、性能调优与前端 UI。第二作者。"
+- id: case-2024
+  year: 2024
+  title: "The Role of automation and User Experience in Multi Robot Systems"
+  venue: "IEEE CASE 2024 · pp. 3818–3825"
+  authors: "Kouta Suzuki, **Miaohui Shi**, Vimolmongkolporn Vitvasin, Yukiko Iwasaki, Hiroyasu Iwata"
+  doi: "10.1109/CASE59546.2024.10711808"
+  url: "https://doi.org/10.1109/CASE59546.2024.10711808"
+  en:
+    summary: "A dual-task study of attention, workload and user experience when one participant operates three robots under different automation levels."
+    contribution: "Independently developed the experimental system except the mechanical-head module; designed and conducted the experiments and completed all data analysis. Second author."
+  zh:
+    summary: "通过双任务实验，研究一人同时操作三台机器人时，不同自动化等级对注意力、工作负荷与用户体验的影响。"
+    contribution: "独立完成实验系统开发（机械头模块除外）、实验设计与实施，以及全部数据分析。第二作者。"
+- id: icma-2023
+  year: 2023
+  title: "Balancing Real-world Interaction and VR Immersion with AI Vision Robotic Arm"
+  venue: "IEEE ICMA 2023 · pp. 2051–2057"
+  authors: "Xiaoran Yang, Yang Zhan, Yukiko Iwasaki, **Miaohui Shi**, Shijie Tang, Hiroyasu Iwata"
+  doi: "10.1109/ICMA57826.2023.10215826"
+  url: "https://doi.org/10.1109/ICMA57826.2023.10215826"
+  en:
+    summary: "Research connecting AI vision, a robotic arm and interaction in virtual reality."
+  zh:
+    summary: "结合 AI 视觉、机械臂与虚拟现实交互的研究。"
+- id: twincat-2021
+  year: 2021
+  title: "基于TwinCAT的机器人实验平台设计"
+  venue: "实验技术与管理 · 38(12):197–202+207"
+  authors: "黄弢, **施妙辉**, 汪迪, 王峻峰"
+  doi: "10.16791/j.cnki.sjg.2021.12.039"
+  url: "https://syjl.cbpt.cnki.net/portal/journal/portal/client/paper/5cd15a3fb56304b7960cc4b3dec53b3a"
+  en:
+    summary: "A robot experimental platform integrating TwinCAT control and Qt-based visualization. Second author."
+  zh:
+    summary: "融合 TwinCAT 控制与 Qt 可视化的机器人实验平台。第二作者。"
+- id: med-2021
+  year: 2021
+  title: "A Remote Experiment Platform based on HTML5 for Industrial Robots"
+  venue: "MED 2021 · pp. 920–923"
+  authors: "Tao Huang, **Miaohui Shi**"
+  doi: "10.1109/MED51440.2021.9480211"
+  url: "https://doi.org/10.1109/MED51440.2021.9480211"
+  en:
+    summary: "An HTML5-based platform for remote industrial-robot experiments and visualization. Second of two authors."
+  zh:
+    summary: "基于 HTML5 的工业机器人远程实验与可视化平台。两位作者之一，第二作者。"

@@ -1,0 +1,9 @@
+{% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.profile[lang] %}
+<div class="page-intro"><p class="eyebrow">Miaohui Shi / 施妙辉</p><h1>{{ ui.publications_title }}</h1><p>{{ ui.publications_intro }}</p></div>
+{% for paper in site.data.papers %}{% include profile/paper.html paper=paper %}{% endfor %}
+<section class="section">
+  <h2>{{ ui.thesis_heading }}</h2>
+  <h3>Remote Body Based on Multi Robot Systems — The Role of Automation and User Experience in Multi-Presence Environments</h3>
+  <p>{{ ui.thesis_note }}</p>
+  <a href="https://www.waseda.jp/fsci/assets/uploads/2024/04/souzou_syuron_2023-2.pdf">{{ ui.thesis_link }}</a>
+</section>
