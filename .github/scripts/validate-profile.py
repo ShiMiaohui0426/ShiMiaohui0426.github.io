@@ -95,7 +95,7 @@ def validate(root):
         assert len(parsed[prefix + "/patents/"].ids) == 9  # main + 8 application records
         assert {"gds", "multi-robot", "tactile"}.issubset(parsed[prefix + "/experience/"].ids)
         figures = parsed[prefix + "/experience/"].images
-        assert len(figures) == 3, "Expected three sourced project figures"
+        assert len(figures) == 5, "Expected five sourced project figures"
         for figure in figures:
             assert figure.get("alt"), "Figure needs descriptive alternative text"
             assert int(figure.get("width", 0)) > 0 and int(figure.get("height", 0)) > 0

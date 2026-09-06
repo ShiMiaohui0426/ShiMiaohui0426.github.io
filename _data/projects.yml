@@ -99,6 +99,29 @@
 - id: tactile
   index: "03"
   tags: [Tactile sensing, Force estimation, Real-time algorithms, UI]
+  figures:
+    - src: /images/projects/tactile-sensor-system.png
+      width: 414
+      height: 528
+      source: "https://www.j-platpat.inpit.go.jp/c1801/PU/JP-2025-156708/11/ja"
+      credit: "JP2025156708A · Fig. 1 / 图 1"
+      en:
+        alt: "Patent schematic of the compliant marker-bearing sensor, camera and tactile, temperature and visual information processing blocks."
+        caption: "Sensor and information-processing architecture. Camera images of the compliant surface and its markers feed the tactile, temperature and visual information modules described in the related patent."
+      zh:
+        alt: "专利中的柔性标记点传感器、相机，以及触觉、温度和视觉信息获取模块结构图。"
+        caption: "传感器与信息处理架构：相机观测柔性表层及其标记点，图像输入相关专利中的触觉、温度与视觉信息获取模块。"
+    - src: /images/projects/tactile-sensor-exploded.png
+      width: 488
+      height: 526
+      source: "https://www.j-platpat.inpit.go.jp/c1801/PU/JP-2025-156708/11/ja"
+      credit: "JP2025156708A · Fig. 2 / 图 2"
+      en:
+        alt: "Exploded patent drawing showing a transparent compliant layer with markers above the sensor housing, optics and camera."
+        caption: "Exploded sensor assembly showing the compliant layer, distributed markers and camera. These original patent drawings provide hardware context for the algorithm and software contribution."
+      zh:
+        alt: "传感器分解图：带有标记点的透明柔性表层，以及下方的壳体、光学部件和相机。"
+        caption: "传感器装配分解图，展示柔性表层、分布式标记点与相机的相对位置。这两张专利原图用于说明算法与软件所依托的硬件背景。"
   en:
     title: "High-speed vision-based tactile sensing"
     period: "Research · ICAT-EGVE 2024"
@@ -123,6 +146,6 @@
     - url: "https://diglib.eg.org/items/2ed76d62-d9a6-47db-b621-c19b3688daef"
       en: "ICAT-EGVE 2024 publication & open-access paper"
       zh: "ICAT-EGVE 2024 出版记录与开放全文"
-    - url: "https://www.j-platpat.inpit.go.jp/"
-      en: "Related patent: JP2025156708A (search by number)"
-      zh: "相关专利：JP2025156708A（按编号检索）"
+    - url: "https://www.j-platpat.inpit.go.jp/c1801/PU/JP-2025-156708/11/ja"
+      en: "Related patent: JP2025156708A"
+      zh: "相关专利：JP2025156708A"
