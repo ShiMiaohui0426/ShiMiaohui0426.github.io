@@ -5,19 +5,49 @@
   <div class="case-heading"><p class="eyebrow">{{ project.index }} /</p><div><p class="metadata">{{ item.period }}</p><h2>{{ item.title }}</h2></div></div>
   <div class="case-body">
     <ul class="tag-list">{% for tag in project.tags %}<li>{{ tag }}</li>{% endfor %}</ul>
+    {% if project.figures %}
+    <div class="project-figures{% if project.figures.size > 1 %} project-figures--pair{% endif %}">
+      {% for figure in project.figures %}{% assign figure_text = figure[lang] %}
+      <figure>
+        <a class="figure-image-link" href="{{ figure.src | relative_url }}" aria-label="{{ figure_text.alt | escape }}">
+          <img src="{{ figure.src | relative_url }}" alt="{{ figure_text.alt | escape }}" width="{{ figure.width }}" height="{{ figure.height }}" loading="lazy" decoding="async">
+        </a>
+        <figcaption>{{ figure_text.caption }} <a href="{{ figure.source }}">{{ figure.credit }}</a></figcaption>
+      </figure>
+      {% endfor %}
+    </div>
+    {% endif %}
     <h3>{{ ui.problem }}</h3><p>{{ item.problem }}</p>
     <h3>{{ ui.approach }}</h3><ul>{% for contribution in item.contributions %}<li>{{ contribution }}</li>{% endfor %}</ul>
     <h3>{{ ui.result }}</h3><div class="evidence"><p>{{ item.result }}</p></div>
     {% if project.id == 'gds' %}
     <div class="table-wrap"><table>
       {% if lang == 'zh' %}
-      <caption>相同 GDS 数据与 4-pass 工作负载。92 → 44 分钟为同配置比较；其余跨配置数据仅展示工程演进。</caption>
-      <thead><tr><th scope="col">阶段</th><th scope="col">平台</th><th scope="col">耗时</th></tr></thead>
-      <tbody><tr><td>2024.12 · V5</td><td>小型 PC</td><td>800 分钟</td></tr><tr><td>2025.07 · V6</td><td>服务器，同配置基线</td><td>92 分钟</td></tr><tr><td>2025.10 · V7</td><td>同一服务器配置与节点数</td><td>44 分钟</td></tr><tr><td>2025.12</td><td>六节点服务器</td><td>24 分钟</td></tr></tbody>
+      <caption>从原理验证到多节点部署的完整演进。早期数值保留原记录的估算／量级性质；分钟级实测记录使用相同 GDS 数据与 4-pass 工作负载。</caption>
+      <thead><tr><th scope="col">阶段与工程工作</th><th scope="col">平台</th><th scope="col">耗时</th><th scope="col">记录性质</th></tr></thead>
+      <tbody>
+        <tr><td>2024 · 初步调研与数学原理</td><td>小型 PC</td><td>数万小时</td><td>完整任务初始推测</td></tr>
+        <tr><td>2024 · Python 原型、先验裁剪与并行计算</td><td>小型 PC</td><td>数千小时</td><td>阶段汇报量级</td></tr>
+        <tr><td>2024 · C++ 框架移植</td><td>小型 PC</td><td>数十小时</td><td>阶段汇报量级</td></tr>
+        <tr><td>2024.12 · V5，访存与编译优化</td><td>小型 PC</td><td>800 分钟</td><td>4-pass 实测</td></tr>
+        <tr><td>2025.07 · V6，迁移并适配分布式计算</td><td>多节点服务器</td><td>92 分钟</td><td>4-pass 实测</td></tr>
+        <tr><td>2025.10 · V7，按节点分块读取</td><td>同一服务器配置与节点数</td><td>44 分钟</td><td>4-pass 实测</td></tr>
+        <tr><td>2025.12 · 多节点部署</td><td>四节点服务器</td><td>56 分钟</td><td>4-pass 实测，独立配置</td></tr>
+        <tr><td>2025.12 · 多节点部署</td><td>六节点服务器</td><td>24 分钟</td><td>4-pass 实测，最快记录</td></tr>
+      </tbody>
       {% else %}
-      <caption>Same GDS data and 4-pass workload. Only 92 → 44 minutes is a same-configuration comparison; the other rows show cross-platform engineering evolution.</caption>
-      <thead><tr><th scope="col">Stage</th><th scope="col">Platform</th><th scope="col">Elapsed time</th></tr></thead>
-      <tbody><tr><td>Dec 2024 · V5</td><td>Small PC</td><td>800 min</td></tr><tr><td>Jul 2025 · V6</td><td>Server baseline</td><td>92 min</td></tr><tr><td>Oct 2025 · V7</td><td>Same server configuration and node count</td><td>44 min</td></tr><tr><td>Dec 2025</td><td>Six-node server</td><td>24 min</td></tr></tbody>
+      <caption>Full progression from mathematical groundwork to multi-node deployment. Early entries retain their estimate / order-of-magnitude status. Minute-level measurements use the same GDS data and 4-pass workload.</caption>
+      <thead><tr><th scope="col">Stage & engineering work</th><th scope="col">Platform</th><th scope="col">Elapsed time</th><th scope="col">Evidence type</th></tr></thead>
+      <tbody>
+        <tr><td>2024 · Initial study and mathematical principles</td><td>Small PC</td><td>Tens of thousands of hours</td><td>Initial full-task estimate</td></tr>
+        <tr><td>2024 · Python prototype, pruning and parallelism</td><td>Small PC</td><td>Thousands of hours</td><td>Coarse progress-report milestone</td></tr>
+        <tr><td>2024 · C++ framework port</td><td>Small PC</td><td>Tens of hours</td><td>Coarse progress-report milestone</td></tr>
+        <tr><td>Dec 2024 · V5, memory and compiler optimization</td><td>Small PC</td><td>800 min</td><td>4-pass measurement</td></tr>
+        <tr><td>Jul 2025 · V6, server migration and distributed adaptation</td><td>Multi-node server</td><td>92 min</td><td>4-pass measurement</td></tr>
+        <tr><td>Oct 2025 · V7, node-local partitioned reads</td><td>Same server configuration and node count</td><td>44 min</td><td>4-pass measurement</td></tr>
+        <tr><td>Dec 2025 · Multi-node deployment</td><td>Four-node server</td><td>56 min</td><td>4-pass measurement, separate configuration</td></tr>
+        <tr><td>Dec 2025 · Multi-node deployment</td><td>Six-node server</td><td>24 min</td><td>4-pass measurement, fastest recorded run</td></tr>
+      </tbody>
       {% endif %}
     </table></div>
     {% endif %}
