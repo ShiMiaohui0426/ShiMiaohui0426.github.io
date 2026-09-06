@@ -70,7 +70,10 @@ def validate(root):
             path = unquote(url.path) or route
             assert path.startswith("/"), f"Unexpected relative URL: {link}"
             target = root / path.lstrip("/")
-            assert target.is_file() or (target / "index.html").is_file(), f"Broken URL {link} in {route}"
+            # Legacy Jekyll permalinks omit the .html suffix; GitHub Pages
+            # serves the corresponding HTML file for these extensionless URLs.
+            candidates = (target, target / "index.html", Path(str(target) + ".html"))
+            assert any(file.is_file() for file in candidates), f"Broken URL {link} in {route}"
             if url.fragment and path in parsed:
                 assert unquote(url.fragment) in parsed[path].ids, f"Broken anchor: {link}"
 
