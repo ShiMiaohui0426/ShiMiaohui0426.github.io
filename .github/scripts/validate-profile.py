@@ -42,7 +42,7 @@ class Page(HTMLParser):
 
 
 def validate(root):
-    assert (root / "images/avatar-cartoon.png").is_file(), "Missing illustrated avatar"
+    assert (root / "images/avatar-anime.png").is_file(), "Missing illustrated avatar"
     assert not (root / "images/photo.jpg").exists(), "Original portrait must not be published"
     for html in root.rglob("*.html"):
         assert "/images/photo.jpg" not in html.read_text(encoding="utf-8"), f"Old portrait reference: {html}"
@@ -87,7 +87,7 @@ def validate(root):
     for prefix in ("", "/zh"):
         portraits = [image for image in parsed[prefix + "/"].images if image.get("class") == "portrait"]
         assert len(portraits) == 1, "Expected one homepage portrait"
-        assert portraits[0]["src"] == "/images/avatar-cartoon.png", "Wrong homepage avatar"
+        assert portraits[0]["src"] == "/images/avatar-anime.png", "Wrong homepage avatar"
         assert portraits[0].get("alt"), "Avatar needs descriptive alternative text"
         assert int(portraits[0]["width"]) * 4 == int(portraits[0]["height"]) * 3
         publications = parsed[prefix + "/publications/"]
