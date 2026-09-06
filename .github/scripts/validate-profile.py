@@ -14,6 +14,7 @@ class Page(HTMLParser):
         self.ids = []
         self.links = []
         self.assets = []
+        self.images = []
         self.alternates = {}
         self.current_links = []
         self.feed(text)
@@ -32,6 +33,8 @@ class Page(HTMLParser):
                 self.current_links.append(attrs.get("href"))
         if tag in ("img", "script"):
             self.assets.append(attrs.get("src", ""))
+        if tag == "img":
+            self.images.append(attrs)
         if tag == "link" and attrs.get("rel") == "stylesheet":
             self.assets.append(attrs.get("href", ""))
         if tag == "link" and attrs.get("rel") == "alternate":
@@ -82,6 +85,16 @@ def validate(root):
         assert len([item for item in publications.ids if item.endswith(("-2021", "-2023", "-2024"))]) == 5
         assert len(parsed[prefix + "/patents/"].ids) == 9  # main + 8 application records
         assert {"gds", "multi-robot", "tactile"}.issubset(parsed[prefix + "/experience/"].ids)
+        figures = parsed[prefix + "/experience/"].images
+        assert len(figures) == 3, "Expected three sourced project figures"
+        for figure in figures:
+            assert figure.get("alt"), "Figure needs descriptive alternative text"
+            assert int(figure.get("width", 0)) > 0 and int(figure.get("height", 0)) > 0
+        cv_text = (root / (prefix + "/cv/").lstrip("/") / "index.html").read_text(encoding="utf-8")
+        project_text = (root / (prefix + "/experience/").lstrip("/") / "index.html").read_text(encoding="utf-8")
+        assert "Sharpa" in cv_text, "Missing Sharpa-related experience"
+        assert "33.3" in project_text and "2.09" in project_text, "Missing full-system and same-platform results"
+        assert ("数万小时" if prefix else "tens of thousands of hours") in project_text
     print(f"PASS: {len(parsed)} bilingual pages; routes, language pairs, assets, anchors, publication and patent counts.")
 
 

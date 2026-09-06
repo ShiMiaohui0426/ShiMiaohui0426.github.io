@@ -1,28 +1,42 @@
 - id: gds
   index: "01"
   tags: [C++, Python, GDS, HPC]
+  figures:
+    - src: /images/projects/gds-subpixel-comparison.png
+      width: 969
+      height: 549
+      source: "https://patents.google.com/patent/CN119987127A/zh"
+      credit: "CN119987127A · Fig. 4 / 图 4"
+      en:
+        alt: "Patent figure comparing a GDS pattern, a binary raster and a subpixel grayscale raster."
+        caption: "GDS pattern → binary raster → subpixel grayscale result, reproduced from the related patent. This illustrates image processing, not the runtime benchmark dataset."
+      zh:
+        alt: "专利附图对比 GDS 图形、二值化图形与亚像素灰度图形。"
+        caption: "GDS 图形 → 二值化图形 → 亚像素图形，摘自相关专利。此图用于说明图像处理效果，不作为耗时测试的数据集展示。"
   en:
     title: "High-performance GDS rasterization"
     period: "2024–2025 · Industry"
-    summary: "From a Python prototype to an optimized C++ rasterization kernel, with distributed processing and node-local partitioned reads."
+    summary: "From an initial small-PC estimate of tens of thousands of hours to a measured 24-minute six-node server run: algorithm redesign, a Python-to-C++ port and distributed deployment."
     problem: "Generate raster data from large GDS layouts for laser direct writing while keeping computation and data loading practical at production scale."
     contributions:
       - "Migrated the rasterization algorithm from Python to C++ and iterated on the kernel, eliminating unnecessary work and optimizing parallel execution, memory access and compiler settings."
+      - "Moved the workload from a small PC to large multi-node servers, adapting the C++ processing pipeline for distributed execution and coordinating computation with on-demand data loading."
       - "Implemented partitioned data reading: each compute node reads only the region it needs, rather than loading the entire input."
       - "Extended the processing pipeline with multi-node support, CD-bias handling and template correction; developed local inspection of images up to one million by one million pixels."
-    result: "The controlled server comparison improved from 92 to 44 minutes: approximately 2.09× faster, or 52.2% less elapsed time. A later six-node run completed the same input and 4-pass workload in 24 minutes."
-    caveat: "The 92- and 44-minute runs use the same server hardware configuration and node count. The 800-minute baseline ran on a small PC; comparisons across that baseline and server runs include hardware and software changes. The six-node result is a separate configuration, not a pure algorithm speedup. Benchmarks are project measurements, not an open reproducibility benchmark."
+    result: "The full engineering trajectory runs from an initial estimate of tens of thousands of hours on a small PC to a measured 24 minutes on six server nodes. Between measured milestones, 800 minutes on the small PC became 24 minutes on the server: 33.3× end-to-end acceleration from the combined algorithm, implementation and platform migration work. Within the same server configuration, 92 → 44 minutes gives a separate 2.09× improvement."
+    caveat: "The initial tens-of-thousands-of-hours figure is an estimate; the intermediate thousands- and tens-of-hours figures are coarse progress-report milestones, not precise timings. The 800 / 92 / 44 / 56 / 24-minute results use the same GDS input and 4-pass workload. Only 92 → 44 holds server hardware and node count fixed; 800 → 24 includes hardware and deployment changes. No precise measured speedup is claimed against the initial estimate."
   zh:
     title: "高性能 GDS 光栅化"
     period: "2024–2025 · 工程研发"
-    summary: "从 Python 原型到优化后的 C++ 光栅化内核，结合分布式处理与节点按需分块读取。"
+    summary: "从小型 PC 上最初预计的数万小时，到六节点服务器实测 24 分钟，覆盖算法重构、Python 到 C++ 移植与分布式部署。"
     problem: "面向激光直写，将大规模 GDS 版图转换为光栅数据，降低计算与数据加载的时间、内存开销。"
     contributions:
       - "将光栅化算法由 Python 移植到 C++，持续迭代内核，减少无效计算，并优化并行执行、内存访问与编译设置。"
+      - "将计算任务由小型 PC 迁移至大型多节点服务器，适配 C++ 处理流水线的分布式执行，协同组织计算任务与按需数据读取。"
       - "实现分块数据读取：每个计算节点只读取自己需要的区域，避免全量加载输入。"
       - "完善多节点处理、CD bias 与模板校正功能，开发支持百万 × 百万像素图像局部查看的配套工具。"
-    result: "同条件服务器测试耗时由 92 分钟降至 44 分钟，约为 2.09 倍速度、耗时减少 52.2%。后续六节点配置下，相同输入与 4-pass 工作负载耗时 24 分钟。"
-    caveat: "92 与 44 分钟对应相同服务器硬件配置和节点数。800 分钟基线来自小型 PC，与服务器结果的差异包含硬件及软件变化。六节点结果属于另一配置，不作为纯算法加速比。以上为项目测试记录，非开放可复现实验基准。"
+    result: "完整工程演进：小型 PC 上最初预计数万小时，最终在六节点服务器上实测 24 分钟。以已实测阶段比较，小型 PC 的 800 分钟降至服务器的 24 分钟，算法、实现与平台迁移共同带来约 33.3 倍端到端加速；同一服务器配置下的 92 → 44 分钟则对应约 2.09 倍优化。"
+    caveat: "最初的“数万小时”为推测值；中间的“数千小时、数十小时”为阶段汇报中的量级描述，不是精确计时。800／92／44／56／24 分钟对应同一 GDS 输入与 4-pass 工作负载。其中仅 92 → 44 分钟保持服务器硬件与节点数一致；800 → 24 分钟包含硬件及部署变化，不将初始估算换算为精确实测加速比。"
   links:
     - url: "http://www.tzoic.com.cn/develops/80"
       en: "Public project-group description"
@@ -33,6 +47,29 @@
 - id: multi-robot
   index: "02"
   tags: [HRI, ROS, Unity, PASAT, NASA-TLX]
+  figures:
+    - src: /images/projects/case-robot-hardware.png
+      width: 408
+      height: 227
+      source: "https://doi.org/10.1109/CASE59546.2024.10711808"
+      credit: "Suzuki, Shi et al. · CASE 2024 · Fig. 2 · © 2024 IEEE"
+      en:
+        alt: "Three photographs showing the gripper, robotic-arm grasping scene and robot head used in the CASE study."
+        caption: "Experimental hardware: gripper, grasping scene and robot head. The mechanical-head module was developed by a doctoral colleague."
+      zh:
+        alt: "CASE 实验中的夹爪、机械臂抓取场景与机械头三张照片。"
+        caption: "实验设备：夹爪、抓取场景与机械头。机械头模块由博士师兄开发。"
+    - src: /images/projects/case-dual-task-setup.png
+      width: 408
+      height: 388
+      source: "https://doi.org/10.1109/CASE59546.2024.10711808"
+      credit: "Suzuki, Shi et al. · CASE 2024 · Fig. 12 · © 2024 IEEE"
+      en:
+        alt: "A participant uses VR to operate robots in three rooms while performing an auditory addition task."
+        caption: "Dual-task experiment: three-robot operation alongside PASAT auditory addition, connecting attention research with multi-robot interaction."
+      zh:
+        alt: "参与者通过 VR 操作三个房间中的机器人，同时完成听觉加法任务。"
+        caption: "双任务实验设计：同时操控三台机器人并完成 PASAT 听觉加法任务，将注意力研究引入多机器人人机交互。"
   en:
     title: "Automation, attention & multi-robot interaction"
     period: "Master's research · CASE 2024"
