@@ -6,7 +6,7 @@
   <div class="case-body">
     <ul class="tag-list">{% for tag in project.tags %}<li>{{ tag }}</li>{% endfor %}</ul>
     {% if project.figures %}
-    <div class="project-figures{% if project.figures.size > 1 %} project-figures--pair{% endif %}">
+    <div class="project-figures{% if project.figures.size > 1 and project.figure_layout != 'stacked' %} project-figures--pair{% endif %}">
       {% for figure in project.figures %}{% assign figure_text = figure[lang] %}
       <figure>
         <a class="figure-image-link" href="{{ figure.src | relative_url }}" aria-label="{{ figure_text.alt | escape }}">

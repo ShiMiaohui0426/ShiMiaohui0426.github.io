@@ -99,29 +99,30 @@
 - id: tactile
   index: "03"
   tags: [Tactile sensing, Force estimation, Real-time algorithms, UI]
+  figure_layout: stacked
   figures:
-    - src: /images/projects/tactile-sensor-system.png
-      width: 414
-      height: 528
-      source: "https://www.j-platpat.inpit.go.jp/c1801/PU/JP-2025-156708/11/ja"
-      credit: "JP2025156708A · Fig. 1 / 图 1"
+    - src: /images/projects/tactile-marker-tracking.png
+      width: 2089
+      height: 551
+      source: "https://doi.org/10.2312/egve.20241368"
+      credit: "Kato, Shi et al. · ICAT-EGVE 2024 · Fig. 2 · © 2024 The Authors · CC BY"
       en:
-        alt: "Patent schematic of the compliant marker-bearing sensor, camera and tactile, temperature and visual information processing blocks."
-        caption: "Sensor and information-processing architecture. Camera images of the compliant surface and its markers feed the tactile, temperature and visual information modules described in the related patent."
+        alt: "Marker-tracking pipeline showing frame-to-frame regions of interest, parallel local searches, preprocessing, binarization, sparse centroid calculation and input to the force model."
+        caption: "High-speed marker tracking: use the previous frame to restrict each marker's search region, process local regions in parallel, and pass the resulting displacement tensor to the force model."
       zh:
-        alt: "专利中的柔性标记点传感器、相机，以及触觉、温度和视觉信息获取模块结构图。"
-        caption: "传感器与信息处理架构：相机观测柔性表层及其标记点，图像输入相关专利中的触觉、温度与视觉信息获取模块。"
-    - src: /images/projects/tactile-sensor-exploded.png
-      width: 488
-      height: 526
-      source: "https://www.j-platpat.inpit.go.jp/c1801/PU/JP-2025-156708/11/ja"
-      credit: "JP2025156708A · Fig. 2 / 图 2"
+        alt: "标记点跟踪流程图，展示帧间局部搜索区域、多线程并行、预处理、二值化、稀疏质心计算以及力模型输入。"
+        caption: "高速标记点跟踪：利用上一帧位置缩小各标记点的搜索范围，并行处理局部区域，再将得到的位移张量送入力估计模型。"
+    - src: /images/projects/tactile-sensor-imaging.png
+      width: 1354
+      height: 725
+      source: "https://doi.org/10.2312/egve.20241368"
+      credit: "Kato, Shi et al. · ICAT-EGVE 2024 · Fig. 5 · © 2024 The Authors · CC BY"
       en:
-        alt: "Exploded patent drawing showing a transparent compliant layer with markers above the sensor housing, optics and camera."
-        caption: "Exploded sensor assembly showing the compliant layer, distributed markers and camera. These original patent drawings provide hardware context for the algorithm and software contribution."
+        alt: "Paper photographs showing the sensor, markers embedded in transparent gel, and images of a ruler and color wheel viewed through the gel."
+        caption: "Sensor prototype and acquired images: markers embedded in transparent gel support tactile sensing while the camera captures a ruler's surface detail and a color wheel through the gel."
       zh:
-        alt: "传感器分解图：带有标记点的透明柔性表层，以及下方的壳体、光学部件和相机。"
-        caption: "传感器装配分解图，展示柔性表层、分布式标记点与相机的相对位置。这两张专利原图用于说明算法与软件所依托的硬件背景。"
+        alt: "论文中的传感器实物、透明凝胶内的标记点，以及透过凝胶拍摄的刻度尺和彩色色环图像。"
+        caption: "传感器实物与成像效果：透明凝胶中的标记点用于触觉感知，相机同时透过凝胶获取刻度尺表面细节与色环颜色。"
   en:
     title: "High-speed vision-based tactile sensing"
     period: "Research · ICAT-EGVE 2024"
