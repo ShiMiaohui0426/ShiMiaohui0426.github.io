@@ -42,6 +42,10 @@ class Page(HTMLParser):
 
 
 def validate(root):
+    assert (root / "images/avatar-cartoon.png").is_file(), "Missing illustrated avatar"
+    assert not (root / "images/photo.jpg").exists(), "Original portrait must not be published"
+    for html in root.rglob("*.html"):
+        assert "/images/photo.jpg" not in html.read_text(encoding="utf-8"), f"Old portrait reference: {html}"
     routes = ["/", "/experience/", "/publications/", "/patents/", "/cv/"]
     all_routes = routes + ["/zh" + route for route in routes]
     parsed = {}
@@ -81,6 +85,11 @@ def validate(root):
                 assert unquote(url.fragment) in parsed[path].ids, f"Broken anchor: {link}"
 
     for prefix in ("", "/zh"):
+        portraits = [image for image in parsed[prefix + "/"].images if image.get("class") == "portrait"]
+        assert len(portraits) == 1, "Expected one homepage portrait"
+        assert portraits[0]["src"] == "/images/avatar-cartoon.png", "Wrong homepage avatar"
+        assert portraits[0].get("alt"), "Avatar needs descriptive alternative text"
+        assert int(portraits[0]["width"]) * 4 == int(portraits[0]["height"]) * 3
         publications = parsed[prefix + "/publications/"]
         assert len([item for item in publications.ids if item.endswith(("-2021", "-2023", "-2024"))]) == 5
         assert len(parsed[prefix + "/patents/"].ids) == 9  # main + 8 application records
