@@ -1,0 +1,26 @@
+{% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.profile[lang] %}
+{% assign prefix = '' %}{% if lang == 'zh' %}{% assign prefix = '/zh' %}{% endif %}
+<div class="page-intro"><p class="eyebrow">Miaohui Shi / 施妙辉</p><h1>{{ ui.cv_title }}</h1><p>{{ ui.cv_intro }}</p><p class="print-note">{{ ui.cv_print }}</p></div>
+<section class="section">
+  <h2>{{ ui.employment }}</h2>
+  {% for entry in ui.employment_entries %}<article class="timeline-entry"><div class="period">{{ entry.period }}</div><div><h3>{{ entry.title }}</h3><p class="muted">{{ entry.organization }}</p><ul>{% for detail in entry.details %}<li>{{ detail }}</li>{% endfor %}</ul></div></article>{% endfor %}
+</section>
+<section class="section">
+  <h2>{{ ui.education }}</h2>
+  {% for entry in ui.education_entries %}<article class="timeline-entry"><div class="period">{{ entry.period }}</div><div><h3>{{ entry.title }}</h3><p>{{ entry.organization }}</p><p class="muted">{{ entry.detail }}</p></div></article>{% endfor %}
+</section>
+<section class="section">
+  <h2>{{ ui.toolkit }}</h2><div class="skills-grid">{% for skill in ui.skills %}<div><h3>{{ skill.title }}</h3><p>{{ skill.text }}</p></div>{% endfor %}</div>
+</section>
+<section class="section">
+  <h2>{{ ui.selected_work }}</h2>
+  {% for project in site.data.projects %}{% assign item = project[lang] %}<h3><a href="{{ prefix | append: '/experience/#' | append: project.id | relative_url }}">{{ item.title }}</a></h3><p>{{ item.summary }}</p>{% endfor %}
+</section>
+<section class="section">
+  <div class="section-heading"><h2>{{ ui.publications_title }}</h2><a href="{{ prefix | append: '/publications/' | relative_url }}">{{ ui.all_papers }}</a></div>
+  {% for paper in site.data.papers %}{% include profile/paper.html paper=paper compact=true %}{% endfor %}
+  <div class="link-row"><a href="{{ prefix | append: '/patents/' | relative_url }}">{{ ui.patents_title }}</a></div>
+</section>
+<section class="section"><h2>{{ ui.earlier }}</h2>{% for entry in ui.earlier_entries %}<article class="timeline-entry"><div class="period">{{ entry.period }}</div><div><h3>{{ entry.title }}</h3><p>{{ entry.detail }}</p></div></article>{% endfor %}</section>
+<section class="section"><h2>{{ ui.research_heading }}</h2><p>{{ ui.research }}</p></section>
+<section class="section"><h2>{{ ui.contact }}</h2><p>{{ ui.contact_note }}</p><div class="link-row"><a href="https://github.com/ShiMiaohui0426">GitHub · ShiMiaohui0426</a><a href="https://www.linkedin.com/in/miaohui-shi-721756195/">LinkedIn · Miaohui Shi</a></div></section>

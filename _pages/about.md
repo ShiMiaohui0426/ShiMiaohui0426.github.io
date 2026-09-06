@@ -1,30 +1,13 @@
 ---
+layout: profile
 permalink: /
-title: "Welcom to Miaohui's Personal Homepage"
-excerpt: "About me"
-author_profile: true
-redirect_from: 
+title: "Algorithm Engineering & Robotics"
+lang: en
+section: home
+alternate: /zh/
+redirect_from:
   - /about/
   - /about.html
 ---
-{% include base_path %}
-
-I am a student come from China. Now, I study as a Graduate Student in Waseda University supervised by Professor.Iwata in Dept. of Mordern ENgineering.
-
-My research topic is about control, VR, Multi-Presence.
-
-Publications
-======
-  <ul>{% for post in site.publications %}
-    {% include archive-single-cv.html %}
-  {% endfor %}</ul>
-  
-Experiences(Details still in preparation)
-======
-  <ul>
-  {% for post in site.experience %}
-  {% include archive-single.html %}
-{% endfor %}
-  </ul>
-
+{% include profile/home.html %}
 

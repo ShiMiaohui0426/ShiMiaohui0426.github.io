@@ -1,0 +1,8 @@
+{% assign paper = include.paper %}{% assign item = paper[lang] %}
+<article class="publication" id="{{ paper.id }}">
+  <p class="eyebrow">{{ paper.venue }}</p>
+  <h2><a href="{{ paper.url }}">{{ paper.title }}</a></h2>
+  <div class="authors">{{ paper.authors | markdownify }}</div>
+  {% unless include.compact %}<p>{{ item.summary }}</p>{% if item.contribution %}<p class="contribution"><strong>{{ ui.contribution }}:</strong> {{ item.contribution }}</p>{% endif %}{% endunless %}
+  <div class="link-row"><a href="{{ paper.url }}">{{ ui.publisher }}</a>{% if paper.pdf %}<a href="{{ paper.pdf }}">{{ ui.open_pdf }}</a>{% endif %}<span class="metadata">DOI: {{ paper.doi }}</span></div>
+</article>

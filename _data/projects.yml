@@ -1,0 +1,91 @@
+- id: gds
+  index: "01"
+  tags: [C++, Python, GDS, HPC]
+  en:
+    title: "High-performance GDS rasterization"
+    period: "2024–2025 · Industry"
+    summary: "From a Python prototype to an optimized C++ rasterization kernel, with distributed processing and node-local partitioned reads."
+    problem: "Generate raster data from large GDS layouts for laser direct writing while keeping computation and data loading practical at production scale."
+    contributions:
+      - "Migrated the rasterization algorithm from Python to C++ and iterated on the kernel, eliminating unnecessary work and optimizing parallel execution, memory access and compiler settings."
+      - "Implemented partitioned data reading: each compute node reads only the region it needs, rather than loading the entire input."
+      - "Extended the processing pipeline with multi-node support, CD-bias handling and template correction; developed local inspection of images up to one million by one million pixels."
+    result: "The controlled server comparison improved from 92 to 44 minutes: approximately 2.09× faster, or 52.2% less elapsed time. A later six-node run completed the same input and 4-pass workload in 24 minutes."
+    caveat: "The 92- and 44-minute runs use the same server hardware configuration and node count. The 800-minute baseline ran on a small PC; comparisons across that baseline and server runs include hardware and software changes. The six-node result is a separate configuration, not a pure algorithm speedup. Benchmarks are project measurements, not an open reproducibility benchmark."
+  zh:
+    title: "高性能 GDS 光栅化"
+    period: "2024–2025 · 工程研发"
+    summary: "从 Python 原型到优化后的 C++ 光栅化内核，结合分布式处理与节点按需分块读取。"
+    problem: "面向激光直写，将大规模 GDS 版图转换为光栅数据，降低计算与数据加载的时间、内存开销。"
+    contributions:
+      - "将光栅化算法由 Python 移植到 C++，持续迭代内核，减少无效计算，并优化并行执行、内存访问与编译设置。"
+      - "实现分块数据读取：每个计算节点只读取自己需要的区域，避免全量加载输入。"
+      - "完善多节点处理、CD bias 与模板校正功能，开发支持百万 × 百万像素图像局部查看的配套工具。"
+    result: "同条件服务器测试耗时由 92 分钟降至 44 分钟，约为 2.09 倍速度、耗时减少 52.2%。后续六节点配置下，相同输入与 4-pass 工作负载耗时 24 分钟。"
+    caveat: "92 与 44 分钟对应相同服务器硬件配置和节点数。800 分钟基线来自小型 PC，与服务器结果的差异包含硬件及软件变化。六节点结果属于另一配置，不作为纯算法加速比。以上为项目测试记录，非开放可复现实验基准。"
+  links:
+    - url: "http://www.tzoic.com.cn/develops/80"
+      en: "Public project-group description"
+      zh: "项目组公开介绍"
+    - url: "https://patents.google.com/patent/CN119987127B/zh"
+      en: "Related subpixel-processing patent"
+      zh: "相关亚像素处理专利"
+- id: multi-robot
+  index: "02"
+  tags: [HRI, ROS, Unity, PASAT, NASA-TLX]
+  en:
+    title: "Automation, attention & multi-robot interaction"
+    period: "Master's research · CASE 2024"
+    summary: "An end-to-end multi-robot experiment connecting psychology-inspired attention tasks with the experience of controlling three robotic arms."
+    problem: "When one person operates multiple robots, does increased automation improve both task performance and the cognitive resources left for another task?"
+    contributions:
+      - "Designed and implemented the experimental system, excluding the mechanical-head module, which was developed by a doctoral colleague."
+      - "Designed and conducted the study, adapting the Paced Auditory Serial Addition Task (PASAT) into a dual-task HRI experiment alongside simultaneous manipulation with three robotic arms."
+      - "Completed all data analysis, combining grasp counts, PASAT performance, NASA-TLX workload and user-experience questionnaires across three automation levels."
+    result: "The study found increased grasping efficiency with higher automation, but cognitive benefits were not monotonic: PASAT performance was lowest at the intermediate level and highest at the most automated level. The result figures report N = 13."
+    caveat: "The multi-robot experiment used object detection and preassigned object positions at its highest automation level; it was not arbitrary-object autonomous manipulation. Findings describe this experimental setup and sample, not a universal effect of automation. The mechanical-head contribution and published co-authorship are preserved."
+  zh:
+    title: "自动化、注意力与多机器人人机交互"
+    period: "硕士研究 · CASE 2024"
+    summary: "将心理学中的注意力任务引入同时操控三台机械臂的实验，独立完成系统、实验及数据分析的核心工作。"
+    problem: "当一个人同时操作多台机器人时，提高自动化程度能否同时改善任务表现，并为另一项任务释放认知资源？"
+    contributions:
+      - "独立设计并实现实验系统；机械头模块除外，该模块由一位博士师兄开发。"
+      - "设计并实施实验，将听觉连续加法任务（PASAT）引入 HRI 双任务范式，参与者同时操作三台机械臂完成抓取。"
+      - "独立完成全部数据分析，结合抓取数量、PASAT 表现、NASA-TLX 工作负荷与用户体验问卷，比较三个自动化等级。"
+    result: "实验中，较高自动化程度提高了抓取效率，但认知收益并非单调增加：中间自动化等级的 PASAT 表现最低，最高自动化等级最好。论文结果图标注 N = 13。"
+    caveat: "多机器人实验的最高自动化等级使用目标检测与预设物体位置，并非任意物体自主操作系统。结论对应本实验设置与样本，不外推为自动化的普遍规律；机械头模块贡献与论文共同作者归属均予以保留。"
+  links:
+    - url: "https://doi.org/10.1109/CASE59546.2024.10711808"
+      en: "CASE 2024 paper"
+      zh: "CASE 2024 论文"
+- id: tactile
+  index: "03"
+  tags: [Tactile sensing, Force estimation, Real-time algorithms, UI]
+  en:
+    title: "High-speed vision-based tactile sensing"
+    period: "Research · ICAT-EGVE 2024"
+    summary: "Independent algorithm and software development, from mathematical principles and implementation through performance tuning and the front-end UI."
+    problem: "Recover force information from camera-observed markers in a compliant sensor fast enough to support tactile feedback in robotic palpation research."
+    contributions:
+      - "Independently developed the algorithmic principles, code implementation, performance optimizations and front-end user interface."
+      - "The published method combines an asymmetric stiffness-coefficient matrix for force estimation with sparse marker search over restricted inter-frame regions."
+    result: "The paper reports a force-information acquisition rate of 601.25 Hz for the sensor system. The work was published at ICAT-EGVE 2024, with Miaohui Shi as second author."
+    caveat: "601.25 Hz is the publication's sensor-system acquisition rate, not a standalone algorithm benchmark. The personal contribution described here concerns algorithms and software, not sole ownership of the sensor hardware or the co-authored research. The dermatological-palpation setting is a research application, not a claim of clinical validation."
+  zh:
+    title: "高速视触觉感知算法与软件"
+    period: "研究项目 · ICAT-EGVE 2024"
+    summary: "独立完成从算法基础原理、代码实现、性能调优到前端 UI 的完整算法与软件研发。"
+    problem: "从相机观测的柔性传感器标记点中高速获取力信息，为机器人触诊研究中的触觉反馈提供支持。"
+    contributions:
+      - "独立完成算法原理设计、代码实现、性能优化与前端用户界面开发。"
+      - "论文方法结合非对称刚度系数矩阵进行力估计，并通过帧间局部范围的稀疏标记点搜索提高处理速度。"
+    result: "论文报告的传感器系统力信息采集速率为 601.25 Hz，成果发表于 ICAT-EGVE 2024，施妙辉为第二作者。"
+    caveat: "601.25 Hz 是论文报告的传感器系统采集速率，不是单独算法的性能基准。此处个人贡献限于算法与软件，不将硬件或共同研究成果表述为独立完成。皮肤触诊属于研究应用场景，不作临床有效性声明。"
+  links:
+    - url: "https://diglib.eg.org/items/2ed76d62-d9a6-47db-b621-c19b3688daef"
+      en: "ICAT-EGVE 2024 publication & open-access paper"
+      zh: "ICAT-EGVE 2024 出版记录与开放全文"
+    - url: "https://www.j-platpat.inpit.go.jp/"
+      en: "Related patent: JP2025156708A (search by number)"
+      zh: "相关专利：JP2025156708A（按编号检索）"

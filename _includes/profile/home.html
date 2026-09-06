@@ -1,0 +1,33 @@
+{% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.profile[lang] %}
+{% assign prefix = '' %}{% if lang == 'zh' %}{% assign prefix = '/zh' %}{% endif %}
+<section class="hero">
+  <div>
+    <p class="eyebrow">{{ ui.role }}</p>
+    <h1>Miaohui Shi <span class="name-zh" lang="zh-CN">施妙辉</span></h1>
+    <p class="hero-lead">{{ ui.lead }}</p>
+    <p class="hero-description">{{ ui.intro }}</p>
+    <div class="link-row"><a class="button-link" href="{{ prefix | append: '/experience/' | relative_url }}">{{ ui.explore }}</a><a href="{{ prefix | append: '/cv/' | relative_url }}">{{ ui.cv_link }}</a><a href="https://github.com/ShiMiaohui0426">GitHub</a></div>
+  </div>
+  <div class="hero-portrait"><img class="portrait" src="{{ '/images/photo.jpg' | relative_url }}" alt="Miaohui Shi / 施妙辉" width="220" height="297"><p class="portrait-caption">{{ ui.location }}</p></div>
+</section>
+<div class="metric-grid">
+  {% for metric in ui.metrics %}<div class="metric"><strong>{{ metric.value }}</strong><span>{{ metric.label }}</span><small>{{ metric.context }}</small></div>{% endfor %}
+</div>
+<section class="section">
+  <div class="section-heading"><h2>{{ ui.selected_work }}</h2><a href="{{ prefix | append: '/experience/' | relative_url }}">{{ ui.all_projects }}</a></div>
+  <div class="project-grid">
+    {% for project in site.data.projects %}{% assign item = project[lang] %}
+    <article class="project-card"><p class="index">{{ project.index }} / {{ item.period }}</p><h3>{{ item.title }}</h3><p>{{ item.summary }}</p><a href="{{ prefix | append: '/experience/#' | append: project.id | relative_url }}">{{ ui.details }}</a></article>
+    {% endfor %}
+  </div>
+</section>
+<section class="section">
+  <div class="section-heading"><h2>{{ ui.selected_papers }}</h2><a href="{{ prefix | append: '/publications/' | relative_url }}">{{ ui.all_papers }}</a></div>
+  <div class="home-publications">
+    {% for paper in site.data.papers limit:2 %}{% include profile/paper.html paper=paper compact=true %}{% endfor %}
+  </div>
+</section>
+<section class="section two-column">
+  <div><h2>{{ ui.research_heading }}</h2><p class="research-direction">{{ ui.research }}</p></div>
+  <div><h2>{{ ui.toolkit }}</h2>{% for skill in ui.skills limit:2 %}<h3>{{ skill.title }}</h3><p class="muted">{{ skill.text }}</p>{% endfor %}<a href="{{ prefix | append: '/cv/' | relative_url }}">{{ ui.cv_link }}</a></div>
+</section>

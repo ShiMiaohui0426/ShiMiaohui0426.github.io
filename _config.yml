@@ -7,10 +7,10 @@
 
 # Site Settings
 locale                   : "en-US"
-title                    : "Miaohui Shi / Personal Site"
+title                    : "Miaohui Shi | 施妙辉"
 title_separator          : "-"
 name                     : &name "Miaohui Shi"
-description              : &description "personal description"
+description              : &description "Algorithm engineer working on high-performance computing, computational lithography, human–robot interaction and vision-based tactile sensing."
 url                      : https://shimiaohui0426.github.io # the base hostname & protocol for your site e.g. "https://mmistakes.github.io"
 baseurl                  : "" # the subpath of your site, e.g. "/blog"
 repository               : "ShiMiaohui0426/ShiMiaohui0426.github.io"
@@ -82,12 +82,12 @@ analytics:
 author:
   name             : "Miaohui Shi"
   avatar           : "photo.jpg"
-  bio              : "A student at Waseda Univ."
-  location         : "Tokyo, Japan"
-  employer         : 
+  bio              : "Algorithm Engineer · HPC / EDA · Robotics"
+  location         : "Taizhou, Zhejiang, China"
+  employer         : "台州光电产业创新中心"
   pubmed           : #"https://www.ncbi.nlm.nih.gov/pubmed/?term=john+snow"
   googlescholar    : #"http://yourfullgooglescholarurl.com"
-  email            : "shimiaohui[at]fuji.waseda.jp"
+  email            :
   researchgate     :  # example: "https://www.researchgate.net/profile/yourprofile"
   uri              :
   bitbucket        :
@@ -268,7 +268,7 @@ sass:
 permalink: /:categories/:title/
 # paginate: 5 # amount of posts to show
 # paginate_path: /page:num/
-timezone: America/Los_Angeles # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+timezone: Asia/Shanghai
 
 
 # Plugins
