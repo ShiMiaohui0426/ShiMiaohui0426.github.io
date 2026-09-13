@@ -54,7 +54,8 @@ def validate(root):
         assert file.is_file(), f"Missing page: {route}"
         text = file.read_text(encoding="utf-8")
         assert "{%" not in text and "{{" not in text, f"Unrendered Liquid: {route}"
-        assert "SMH_RESUME.pdf" not in text, f"Old CV link: {route}"
+        assert "SMH_RESUME.pdf" not in text, f"Use the versioned current CV download: {route}"
+        assert "A student at Waseda Univ." not in text, f"Stale student biography: {route}"
         assert "fuji.waseda.jp" not in text, f"Old institutional email: {route}"
         assert "年终述职" not in text and ".pptx" not in text, f"Internal report link: {route}"
         page = Page(text)
@@ -102,6 +103,11 @@ def validate(root):
         cv_text = (root / (prefix + "/cv/").lstrip("/") / "index.html").read_text(encoding="utf-8")
         project_text = (root / (prefix + "/experience/").lstrip("/") / "index.html").read_text(encoding="utf-8")
         assert "Sharpa" in cv_text, "Missing Sharpa-related experience"
+        for language in ("EN", "ZH"):
+            pdf_path = f"/files/Miaohui_Shi_CV_{language}.pdf"
+            assert pdf_path in cv_text, "Missing current CV download"
+            assert (root / pdf_path.lstrip("/")).read_bytes().startswith(b"%PDF-"), "Invalid CV PDF"
+        assert (root / "files/SMH_RESUME.pdf").read_bytes() == (root / "files/Miaohui_Shi_CV_ZH.pdf").read_bytes(), "Legacy PDF must serve the current Chinese CV"
         assert "33.3" in project_text and "2.09" in project_text, "Missing full-system and same-platform results"
         assert ("数万小时" if prefix else "tens of thousands of hours") in project_text
     print(f"PASS: {len(parsed)} bilingual pages; routes, language pairs, assets, anchors, publication and patent counts.")

@@ -6,6 +6,7 @@ lang: en
 section: cv
 alternate: /zh/cv/
 redirect_from:
+  - /cv.html
   - /resume
   - /resume.html
 ---
