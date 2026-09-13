@@ -1,6 +1,11 @@
 {% assign lang = page.lang | default: 'en' %}{% assign ui = site.data.profile[lang] %}
 {% assign prefix = '' %}{% if lang == 'zh' %}{% assign prefix = '/zh' %}{% endif %}
 <div class="page-intro"><p class="eyebrow">Miaohui Shi / 施妙辉</p><h1>{{ ui.cv_title }}</h1><p>{{ ui.cv_intro }}</p><p class="print-note">{{ ui.cv_print }}</p></div>
+<div class="link-row print-note">
+  <a class="button-link" href="{{ '/files/Miaohui_Shi_CV_EN.pdf' | relative_url }}?v=20260913" download>{% if lang == 'zh' %}下载英文简历 PDF{% else %}Download English CV (PDF){% endif %}</a>
+  <a href="{{ '/files/Miaohui_Shi_CV_ZH.pdf' | relative_url }}?v=20260913" download>{% if lang == 'zh' %}下载中文简历 PDF{% else %}Download Chinese CV (PDF){% endif %}</a>
+  <span class="note">{% if lang == 'zh' %}更新于 2026-09-13{% else %}Updated 13 September 2026{% endif %}</span>
+</div>
 <section class="section">
   <h2>{{ ui.employment }}</h2>
   {% for entry in ui.employment_entries %}<article class="timeline-entry"><div class="period">{{ entry.period }}</div><div><h3>{{ entry.title }}</h3><p class="muted">{{ entry.organization }}</p><ul>{% for detail in entry.details %}<li>{{ detail }}</li>{% endfor %}</ul></div></article>{% endfor %}
