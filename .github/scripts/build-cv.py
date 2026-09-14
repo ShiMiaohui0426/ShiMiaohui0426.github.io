@@ -1,37 +1,45 @@
-"""Build the public bilingual CV PDFs. Requires reportlab and PyYAML."""
+"""Build the two-page bilingual CVs with embedded, locally bundled fonts.
+
+Run: python3 .github/scripts/build-cv.py
+Dependencies: reportlab, PyYAML. See .github/fonts/README.md for font coverage.
+"""
 from pathlib import Path
 from xml.sax.saxutils import escape
-import re, shutil
+import re
+import shutil
 import yaml
 from reportlab.pdfgen import canvas
-from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, PageBreak, KeepTogether
+from reportlab.platypus import Paragraph
 from reportlab.lib.styles import ParagraphStyle
 from reportlab.lib.colors import HexColor
 from reportlab.pdfbase import pdfmetrics
-from reportlab.pdfbase.cidfonts import UnicodeCIDFont
+from reportlab.pdfbase.ttfonts import TTFont
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA = yaml.safe_load((ROOT/'_data/profile.yml').read_text())
-PAPERS = yaml.safe_load((ROOT/'_data/papers.yml').read_text())
-pdfmetrics.registerFont(UnicodeCIDFont('STSong-Light'))
+DATA = yaml.safe_load((ROOT / '_data/profile.yml').read_text(encoding='utf-8'))
+PAPERS = yaml.safe_load((ROOT / '_data/papers.yml').read_text(encoding='utf-8'))
 BASE = 'https://shimiaohui0426.github.io'
-UPDATED = '2026-09-13'
+UPDATED = '2026-09-14'
+FONT_DIR = ROOT / '.github/fonts'
+for weight in ('Regular', 'Bold'):
+    pdfmetrics.registerFont(TTFont('CV-' + weight, str(FONT_DIR / f'NotoSansSC-CV-{weight}.ttf')))
+pdfmetrics.registerFontFamily('CV-Regular', normal='CV-Regular', bold='CV-Bold', italic='CV-Regular', boldItalic='CV-Bold')
 
 COPY = {
 'en': {
- 'name':'Miaohui Shi / 施妙辉', 'role':'Algorithm Engineer | High-performance Computing & Robotics',
- 'intro':'Algorithm engineer at Taizhou Optoelectronics Industry Innovation Center. M.S. in Mechanical Engineering, Waseda University, completed March 2024. Research and engineering in GDS rasterization, multi-robot interaction and vision-based tactile sensing.',
+ 'name':'Miaohui Shi', 'role':'Algorithm Engineer | High-performance Computing & Robotics',
+ 'intro':'Algorithm engineer working across high-performance computing, computational lithography and robotics. Develop C++ / Python systems for GDS rasterization, multi-robot interaction and vision-based tactile sensing.',
  'work':'PROFESSIONAL EXPERIENCE', 'education':'EDUCATION', 'skills':'TECHNICAL SKILLS', 'earlier':'EARLIER ACADEMIC EXPERIENCE',
  'jobs':[
   ('Sep 2024 - present','Algorithm Engineer','Taizhou Optoelectronics Industry Innovation Center / 台州光电产业创新中心',[
-   'Develop EDA-related algorithms and software using C++ and Python. Ported GDS rasterization from Python to C++ and optimized computation, parallelism, memory access and compilation.',
-   'Migrated the workload from a small PC to multi-node servers. Full progression: an initial estimate of tens of thousands of hours to a measured 24-minute six-node run. Measured 800 to 24 minutes gives 33.3× end-to-end acceleration, including hardware and deployment changes.',
-   'Implemented partitioned reads so each node loads only its assigned data. On the same server configuration and node count, reduced processing from 92 to 44 minutes (2.09×). Minute-level comparisons use the same GDS input and 4-pass workload.',
-   'Extended the pipeline with multi-node processing, CD bias and correction support; built software for local inspection of very large raster images and equipment control.'
+   'Ported GDS rasterization from Python to C++; optimized computation, parallelism, memory access and compilation. Added multi-node processing, CD bias and correction support.',
+   'Migrated a small-PC workload to multi-node servers: from an initial estimate of tens of thousands of hours to a measured 24-minute six-node run. Measured 800 to 24 minutes: 33.3× end-to-end acceleration, including hardware and deployment changes.',
+   'Partitioned reads so each node loads only assigned data: 92 to 44 minutes (2.09×) with the same server configuration and node count. Minute-level comparisons use the same GDS input and 4-pass workload.',
+   'Built software for local inspection of very large raster images and equipment control.'
   ]),
   ('Apr - Aug 2024','Algorithm Development','Hesai Technology / Sharpa-related R&D',[
-   'Formal employer: Hesai Technology. Worked on LiDAR functional-degradation algorithms and noise-segmentation model training, alongside Sharpa-related tactile-sensor R&D.',
-   'Designed and trained mechanical models for vision-based tactile sensors; developed and trained models on Ubuntu.'
+   'At Hesai Technology, developed LiDAR functional-degradation algorithms and trained noise-segmentation models; also contributed to Sharpa-related tactile-sensor R&D.',
+   'Designed and trained vision-based tactile-sensor mechanical models; developed software on Ubuntu.'
   ])],
  'research':'SELECTED RESEARCH',
  'projects':[
@@ -40,10 +48,10 @@ COPY = {
  'papers':'PUBLICATIONS', 'patents':'PATENTS',
  'patent_text':'Eight distinct patent application records are listed on the website, covering visual inspection, material handling, subpixel image processing and vision-based tactile sensing. Publication and grant versions of the same application are counted once.',
  'interest':'RESEARCH DIRECTION', 'interest_text':'Future doctoral research interest: household service robots, tactile perception, human-robot collaboration and appropriate automation. Industry interests include EDA, computational lithography and high-performance algorithm engineering.',
- 'foot':'Updated 13 Sep 2026 | Quantified project results through 2025',
+ 'foot':'Updated 14 Sep 2026 | Quantified project results through 2025',
 },
 'zh': {
- 'name':'施妙辉 / Miaohui Shi', 'role':'算法工程师 | 高性能计算与机器人研究',
+ 'name':'施妙辉', 'role':'算法工程师 | 高性能计算与机器人研究',
  'intro':'现任台州光电产业创新中心算法工程师。2024 年 3 月毕业于早稻田大学，获机械工程硕士学位。研究与工程方向涵盖 GDS 光栅化、多机器人人机交互及高速视触觉感知。',
  'work':'工作经历', 'education':'教育背景', 'skills':'技术能力', 'earlier':'早期学术经历',
  'jobs':[
@@ -64,56 +72,236 @@ COPY = {
  'papers':'发表论文', 'patents':'专利成果',
  'patent_text':'主页收录 8 条不同专利申请记录，涵盖视觉检测、自动上料、亚像素图像处理及视触觉传感器。同一申请的公开文本与授权文本不重复计数；完整题名、申请号和来源见专利页面。',
  'interest':'研究方向', 'interest_text':'未来博士研究兴趣：家庭服务机器人、触觉感知、人机协作与适度自动化。产业方向关注 EDA、计算光刻与高性能算法工程。',
- 'foot':'更新于 2026-09-13 | 量化项目成果截至 2025 年',
+ 'foot':'更新于 2026-09-14 | 量化项目成果截至 2025 年',
 }}
 
-def build(lang):
- c=COPY[lang]; ui=DATA[lang]; stories=[]
- styles={
- 'name':ParagraphStyle('name',fontName='Helvetica',fontSize=24,leading=29,textColor=HexColor('#153b57'),spaceAfter=5),
- 'role':ParagraphStyle('role',fontName='Helvetica',fontSize=12,leading=17,spaceAfter=7),
- 'body':ParagraphStyle('body',fontName='Helvetica',fontSize=10,leading=13.5,spaceAfter=5,wordWrap='CJK' if lang=='zh' else None),
- 'small':ParagraphStyle('small',fontName='Helvetica',fontSize=9,leading=12,spaceAfter=4,textColor=HexColor('#42566a')),
- 'section':ParagraphStyle('section',fontName='Helvetica',fontSize=13,leading=18,textColor=HexColor('#153b57'),spaceBefore=8,spaceAfter=5,keepWithNext=True),
- 'job':ParagraphStyle('job',fontName='Helvetica',fontSize=11.5,leading=16,spaceBefore=5,spaceAfter=3,keepWithNext=True),
- }
- def para(t,style='body',raw=False):
-  text=t if raw else escape(t)
-  text=re.sub(r'[\u2e80-\uffff]+',lambda m:'<font name="STSong-Light">'+m.group()+'</font>',text)
-  return Paragraph(text,styles[style])
- def add(t,s='body',raw=False):stories.append(para(t,s,raw))
- def sect(t):add(t,'section')
- add(c['name'],'name');add(c['role'],'role')
- add(f'Taizhou, Zhejiang, China | <link href="{BASE}/cv/" color="#17608c">{BASE}/cv/</link>', 'small',True)
- add('<link href="https://github.com/ShiMiaohui0426" color="#17608c">GitHub: ShiMiaohui0426</link> | <link href="https://www.linkedin.com/in/miaohui-shi-721756195/" color="#17608c">LinkedIn: Miaohui Shi</link>', 'small',True)
- add(c['intro']);sect(c['work'])
- for period,title,org,bullets in c['jobs']:
-  add(f'{title} | {period}','job');add(org,'small')
-  for b in bullets:add('• '+b)
- sect(c['education'])
- for e in ui['education_entries']:
-  add(e['title']+' | '+e['period'],'job');add(e['organization'],'body')
- sect(c['skills'])
- for e in ui['skills']:add(e['title']+': '+e['text'],'small')
- sect(c['earlier'])
- for e in ui['earlier_entries']:add(e['period']+' | '+e['title'],'small')
- stories.append(PageBreak())
- add(c['name'],'name');add(c['research'],'role')
- for title,desc in c['projects']:add(title,'job');add(desc)
- sect(c['papers'])
- for p in PAPERS:
-  title=p['title'];authors=p['authors'].replace('**','')
-  stories.append(KeepTogether([para(f"{p['year']} | {title}",'job'),para(authors,'small'),para(escape(p['venue'])+f' | <link href="https://doi.org/{p["doi"]}" color="#17608c">DOI: {p["doi"]}</link>','small',True)]))
- sect(c['patents']);add(c['patent_text']);add(f'<link href="{BASE}/patents/" color="#17608c">{BASE}/patents/</link>','small',True)
- sect(c['interest']);add(c['interest_text'])
- def footer(can,doc):
-  can.setTitle('Miaohui Shi - Curriculum Vitae - '+lang.upper()+' - '+UPDATED)
-  can.setAuthor('Miaohui Shi');can.setSubject('Current professional CV; updated '+UPDATED)
-  can.setStrokeColor(HexColor('#d5dde4'));can.line(42,37,553,37)
-  can.setFont('STSong-Light',8);can.setFillColor(HexColor('#526779'));can.drawString(42,24,c['foot']);can.drawRightString(553,24,str(doc.page))
- path=ROOT/'files'/f'Miaohui_Shi_CV_{lang.upper()}.pdf'
- SimpleDocTemplate(str(path),pagesize=(595.28,841.89),leftMargin=42,rightMargin=42,topMargin=34,bottomMargin=49).build(stories,onFirstPage=footer,onLaterPages=footer)
- print(path)
-for lang in ('en','zh'):build(lang)
-# Keep old bookmarks useful; the original PDF was in Chinese.
-shutil.copyfile(ROOT/'files/Miaohui_Shi_CV_ZH.pdf',ROOT/'files/SMH_RESUME.pdf')
+# A4, generous outer margins, one reading column and restrained teal accents.
+W, H, M = 595.276, 841.89, 42
+CW = W - 2 * M
+INK, MUTED, TEAL, RULE, PALE = map(HexColor, ('#172B39', '#52636C', '#176B71', '#D5E0E3', '#F1F7F7'))
+
+
+def clean(text):
+    return str(text).replace('–', '-').replace('—', '-').replace('\u2011', '-')
+
+
+class Resume:
+    def __init__(self, lang):
+        self.lang = lang
+        self.c = COPY[lang]
+        self.ui = DATA[lang]
+        self.path = ROOT / 'files' / f'Miaohui_Shi_CV_{lang.upper()}.pdf'
+        self.pdf = canvas.Canvas(str(self.path), pagesize=(W, H), pageCompression=1, invariant=1,
+                                 initialFontName='CV-Regular', lang='zh-CN' if lang == 'zh' else 'en')
+        self.pdf.setTitle(f'Miaohui Shi | Curriculum Vitae | {lang.upper()} | {UPDATED}')
+        self.pdf.setAuthor('Miaohui Shi')
+        self.pdf.setSubject('Algorithm engineering, high-performance computing and robotics')
+        self.pdf.setCreator('Miaohui Shi CV / ReportLab')
+        self.body_size = 10.0 if lang == 'zh' else 9.3
+        self.leading = 15.0 if lang == 'zh' else 13.5
+        self.page = 1
+        self.y = 38
+
+    def text(self, text, x=M, top=None, width=CW, size=None, leading=None,
+             bold=False, color=INK, raw=False, measure=False):
+        top = self.y if top is None else top
+        text = clean(text)
+        markup = text if raw else escape(text)
+        visible = re.sub('<[^>]*>', '', markup)
+        # Never silently emit missing-glyph squares after a content update.
+        cmap = pdfmetrics.getFont('CV-Regular').face.charToGlyph
+        missing = sorted({c for c in visible if not c.isspace() and ord(c) not in cmap})
+        if missing:
+            raise ValueError('Missing font glyphs; regenerate CV fonts: ' + ''.join(missing))
+        size = size or self.body_size
+        st = ParagraphStyle('cv', fontName='CV-Bold' if bold else 'CV-Regular',
+                            fontSize=size, leading=leading or self.leading,
+                            textColor=color, wordWrap='CJK' if self.lang == 'zh' else None,
+                            splitLongWords=False, allowWidows=0, allowOrphans=0)
+        p = Paragraph(markup, st)
+        _, height = p.wrap(width, H)
+        if not measure:
+            if top + height > H - 48:
+                raise ValueError(f'Page {self.page} overflows at {text[:70]!r}: {top + height:.1f}')
+            p.drawOn(self.pdf, x, H - top - height)
+        return height
+
+    def add(self, text, gap=5, **kw):
+        self.y += self.text(text, **kw) + gap
+
+    def link(self, label, url):
+        return f'<link href="{escape(url)}" color="#176B71">{escape(label)}</link>'
+
+    def line(self, top, x=M, width=CW, color=RULE, weight=.6):
+        self.pdf.setStrokeColor(color)
+        self.pdf.setLineWidth(weight)
+        self.pdf.line(x, H-top, x+width, H-top)
+
+    def header(self, compact=False):
+        self.pdf.setFillColor(TEAL)
+        self.pdf.rect(M, H-29, 30, 3, fill=1, stroke=0)
+        if compact:
+            self.add(self.c['name'], size=21, leading=26, bold=True, gap=2)
+            self.text('研究与成果' if self.lang == 'zh' else 'RESEARCH & PUBLICATIONS',
+                      top=43, x=310, width=CW-268, size=9, leading=13, color=TEAL)
+            self.line(self.y+6)
+            self.y += 20
+            return
+        self.add(self.c['name'], size=31, leading=38, bold=True, gap=3)
+        self.text('Miaohui Shi' if self.lang == 'zh' else '施妙辉',
+                  x=424 if self.lang == 'en' else 397, top=47, width=155, size=13, leading=19, color=MUTED)
+        self.add(self.c['role'], size=11, leading=16, color=TEAL, gap=7)
+        loc = '中国 · 浙江台州' if self.lang == 'zh' else 'Taizhou, Zhejiang, China'
+        self.add(escape(loc)+'  |  '+self.link('shimiaohui0426.github.io', BASE+('/zh/cv/' if self.lang=='zh' else '/cv/')),
+                 size=8.4, leading=12, color=MUTED, raw=True, gap=2)
+        self.add(self.link('GitHub / ShiMiaohui0426', 'https://github.com/ShiMiaohui0426')+'  ·  '+
+                 self.link('LinkedIn / Miaohui Shi', 'https://www.linkedin.com/in/miaohui-shi-721756195/'),
+                 size=8.4, leading=12, color=MUTED, raw=True, gap=9)
+        self.line(self.y)
+        self.y += 12
+        self.add(self.c['intro'], size=self.body_size, leading=self.leading, gap=12)
+
+    def section(self, label):
+        self.y += 6
+        self.text(label, size=10.3, leading=15, bold=True, color=TEAL)
+        length = pdfmetrics.stringWidth(label, 'CV-Bold', 10.3)
+        self.line(self.y+9, M+length+12, CW-length-12)
+        self.y += 23
+
+    def metrics(self):
+        items = [
+            ('800 → 24 min', 'GDS 端到端耗时' if self.lang=='zh' else 'GDS end-to-end runtime',
+             '约 33.3× · 含硬件与部署变化' if self.lang=='zh' else '33.3× incl. platform changes'),
+            ('92 → 44 min', '同条件服务器优化' if self.lang=='zh' else 'Same-condition server run',
+             '约 2.09× · 按节点分块读取' if self.lang=='zh' else '2.09× with partitioned reads'),
+            ('601.25 Hz', '视触觉系统力信息采集' if self.lang=='zh' else 'Tactile force acquisition',
+             '论文报告的传感器系统速率' if self.lang=='zh' else 'Reported sensor-system rate'),
+        ]
+        gap=10
+        col=(CW-2*gap)/3
+        top=self.y
+        for i,(value,label,note) in enumerate(items):
+            x=M+i*(col+gap)
+            self.pdf.setFillColor(PALE)
+            self.pdf.roundRect(x, H-top-70, col, 70, 4, fill=1, stroke=0)
+            self.text(value, x+10, top+7, col-20, size=17.5, leading=24, bold=True, color=TEAL)
+            self.text(label, x+10, top+34, col-20, size=8.3, leading=12, bold=True)
+            self.text(note, x+10, top+49, col-20, size=7.2, leading=10, color=MUTED)
+        self.y += 81
+
+    def job(self, period, title, org, bullets):
+        period_w = 113
+        heading = org if self.lang=='zh' else org.split(' / ')[0]
+        if self.lang == 'en' and 'Hesai' in org:
+            heading = 'Hesai Technology / Sharpa-related R&D'
+        self.add(heading, width=CW-period_w-8, size=11.2 if self.lang=='zh' else 10.3,
+                 leading=16, bold=True, gap=1)
+        # Dates align to the same right-hand column for every employer.
+        self.text(period, M+CW-period_w, self.y-17, period_w, size=8.0, leading=13, color=MUTED)
+        self.add(title, size=8.7, leading=13, color=MUTED, gap=4)
+        for bullet in bullets:
+            self.pdf.setFillColor(TEAL)
+            self.pdf.circle(M+2, H-self.y-6.7, 1.35, fill=1, stroke=0)
+            self.add(bullet, x=M+11, width=CW-11, gap=3)
+        self.y += 6
+
+    def education(self):
+        self.section(self.c['education'])
+        top=self.y
+        gap=24
+        width=(CW-gap)/2
+        ends=[]
+        for i,e in enumerate(self.ui['education_entries']):
+            x=M+i*(width+gap)
+            y=top
+            org, country = e['organization'].split(' · ')
+            y += self.text(org,x,y,width,size=10.2,leading=15,bold=True)+2
+            y += self.text(e['title'],x,y,width,size=9,leading=13)+2
+            y += self.text(e['period']+'  ·  '+country,x,y,width,size=8.3,leading=12,color=MUTED)
+            ends.append(y)
+        self.y=max(ends)+4
+
+    def skills(self):
+        self.section(self.c['skills'])
+        gap=24
+        width=(CW-gap)/2
+        for row in range(2):
+            top=self.y
+            ends=[]
+            for col,e in enumerate(self.ui['skills'][2*row:2*row+2]):
+                x=M+col*(width+gap)
+                y=top+self.text(e['title'],x,top,width,size=8.8,leading=13,bold=True)+2
+                y+=self.text(e['text'],x,y,width,size=8.2,leading=12,color=MUTED)
+                ends.append(y)
+            self.y=max(ends)+8
+
+    def research(self):
+        self.section(self.c['research'])
+        for title, desc in self.c['projects']:
+            self.add(title,size=10.1,leading=15,bold=True,gap=4)
+            self.add(desc, size=self.body_size,leading=self.leading,gap=9)
+
+    def papers(self):
+        self.section(self.c['papers'])
+        for p in PAPERS:
+            top=self.y
+            self.text(str(p['year']),M,top,35,size=8.5,leading=14,color=TEAL,bold=True)
+            x=M+44
+            width=CW-44
+            title=self.link(p['title'], 'https://doi.org/'+p['doi'])
+            self.y += self.text(title,x,top,width,size=9.0,leading=12.6,bold=True,raw=True)+2
+            authors = escape(p['authors'].replace('**',''))
+            for name in ('Miaohui Shi','施妙辉'):
+                authors=authors.replace(name,f'<b>{name}</b>')
+            self.y += self.text(authors,x,self.y,width,size=7.8,leading=11.3,color=MUTED,raw=True)+1
+            self.y += self.text(p['venue'],x,self.y,width,size=8.0,leading=11.3,color=MUTED)+8
+
+    def closing(self):
+        self.section(self.c['patents'])
+        self.add(self.c['patent_text'],size=8.8,leading=13,gap=3)
+        self.add(self.link('完整专利记录 / 8 项申请' if self.lang=='zh' else 'Full patent record / 8 applications',
+                           BASE+('/zh/patents/' if self.lang=='zh' else '/patents/')),
+                 raw=True,size=8.2,leading=12,gap=6)
+        self.section(self.c['earlier'])
+        for e in self.ui['earlier_entries']:
+            self.add(e['period']+'  |  '+e['title'],size=8.2,leading=12,gap=3)
+        self.section(self.c['interest'])
+        self.add(self.c['interest_text'],size=8.8,leading=13,gap=0)
+
+    def footer(self):
+        print(f'{self.lang.upper()} page {self.page}: content bottom {self.y:.1f} pt / {H-48:.1f} pt')
+        if self.y > H-48:
+            raise ValueError('Page content collides with footer')
+        self.line(H-36)
+        self.text(self.c['foot'], top=H-30, size=7.0, leading=10, color=MUTED, measure=True)
+        self.pdf.setFont('CV-Regular',7)
+        self.pdf.setFillColor(MUTED)
+        self.pdf.drawString(M, 21, clean(self.c['foot']))
+        self.pdf.drawRightString(W-M, 21, f'0{self.page} / 02')
+
+    def build(self):
+        self.header()
+        self.metrics()
+        self.section(self.c['work'])
+        for job in self.c['jobs']:
+            self.job(*job)
+        self.education()
+        self.skills()
+        self.footer()
+        self.pdf.showPage()
+        self.page=2
+        self.y=38
+        self.header(compact=True)
+        self.research()
+        self.papers()
+        self.closing()
+        self.footer()
+        self.pdf.save()
+        print(self.path)
+
+
+if __name__ == '__main__':
+    for language in ('en','zh'):
+        Resume(language).build()
+    # Keep existing bookmarks and the legacy Chinese download valid.
+    shutil.copyfile(ROOT/'files/Miaohui_Shi_CV_ZH.pdf', ROOT/'files/SMH_RESUME.pdf')
