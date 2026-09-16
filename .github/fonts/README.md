@@ -17,8 +17,10 @@ From the repository root, with Python 3, ReportLab and PyYAML installed:
 python3 .github/scripts/build-cv.py
 ```
 
-The script reads the CV copy in `build-cv.py`, plus education, skills and
-academic experience from `_data/profile.yml` and papers from `_data/papers.yml`.
+The script reads employment summaries (`cv_details`), education, skills and
+academic experience from `_data/profile.yml`, papers from `_data/papers.yml`,
+and the remaining CV copy in `build-cv.py`. Full web descriptions and concise
+PDF employment summaries are maintained together in the profile data.
 It writes both `files/Miaohui_Shi_CV_EN.pdf` and `files/Miaohui_Shi_CV_ZH.pdf`,
 then refreshes `files/SMH_RESUME.pdf` as an identical Chinese compatibility copy.
 No network access or system font installation is required to rebuild.

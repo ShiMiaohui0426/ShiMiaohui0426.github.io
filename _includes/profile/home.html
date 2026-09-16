@@ -11,7 +11,7 @@
   <div class="hero-portrait"><img class="portrait" src="{{ '/images/avatar-anime.png' | relative_url }}" alt="{% if lang == 'zh' %}施妙辉的二次元头像{% else %}Anime-style portrait of Miaohui Shi{% endif %}" width="1086" height="1448"><p class="portrait-caption">{{ ui.location }}</p></div>
 </section>
 <div class="metric-grid">
-  {% for metric in ui.metrics %}<div class="metric"><strong>{{ metric.value }}</strong><span>{{ metric.label }}</span><small>{{ metric.context }}</small></div>{% endfor %}
+  {% for metric in ui.metrics %}<div class="metric"><strong>{{ metric.value | escape }}</strong><span>{{ metric.label }}</span><small>{{ metric.context }}</small></div>{% endfor %}
 </div>
 <section class="section">
   <div class="section-heading"><h2>{{ ui.selected_work }}</h2><a href="{{ prefix | append: '/experience/' | relative_url }}">{{ ui.all_projects }}</a></div>
