@@ -14,29 +14,43 @@
         alt: "专利附图对比 GDS 图形、二值化图形与亚像素灰度图形。"
         caption: "GDS 图形 → 二值化图形 → 亚像素图形，摘自相关专利。此图用于说明图像处理效果，不作为耗时测试的数据集展示。"
   en:
-    title: "High-performance GDS rasterization"
-    period: "2024–2025 · Industry"
-    summary: "From an initial small-PC estimate of tens of thousands of hours to a measured 24-minute six-node server run: algorithm redesign, a Python-to-C++ port and distributed deployment."
-    problem: "Generate raster data from large GDS layouts for laser direct writing while keeping computation and data loading practical at production scale."
+    title: GDS rasterization & equipment data pipelines
+    period: 2024–present · Industry
+    summary: C++ rasterization on six compute nodes, with a measured 24-minute run, peak memory below 120 GB per node, and a recoverable pipeline that generates data during equipment processing.
+    problem: Turn large GDS layouts into subpixel grayscale data for laser direct writing, while controlling runtime and memory and coordinating data delivery with equipment processing.
     contributions:
-      - "Migrated the rasterization algorithm from Python to C++ and iterated on the kernel, eliminating unnecessary work and optimizing parallel execution, memory access and compiler settings."
-      - "Moved the workload from a small PC to large multi-node servers, adapting the C++ processing pipeline for distributed execution and coordinating computation with on-demand data loading."
-      - "Implemented partitioned data reading: each compute node reads only the region it needs, rather than loading the entire input."
-      - "Extended the processing pipeline with multi-node support, CD-bias handling and template correction; developed local inspection of images up to one million by one million pixels."
-    result: "The full engineering trajectory runs from an initial estimate of tens of thousands of hours on a small PC to a measured 24 minutes on six server nodes. Between measured milestones, 800 minutes on the small PC became 24 minutes on the server: 33.3× end-to-end acceleration from the combined algorithm, implementation and platform migration work. Within the same server configuration, 92 → 44 minutes gives a separate 2.09× improvement."
-    caveat: "The initial tens-of-thousands-of-hours figure is an estimate; the intermediate thousands- and tens-of-hours figures are coarse progress-report milestones, not precise timings. The 800 / 92 / 44 / 56 / 24-minute results use the same GDS input and 4-pass workload. Only 92 → 44 holds server hardware and node count fixed; 800 → 24 includes hardware and deployment changes. No precise measured speedup is claimed against the initial estimate."
+    - Ported the rasterization kernel from Python to C++ and maintain core computational lithography algorithms. Proposed and implemented boundary-focused subpixel rasterization, with detailed area computation at polygon boundaries and filling of interior regions; collaborated with a colleague on Clipper2 integration.
+    - Migrated GDS processing from a small PC to multi-node servers. For the same GDS input and 4-pass workload, measured milestones improved from 800 to 24 minutes (33.3× end to end, including hardware and deployment changes). Partitioned input reads separately reduced 92 to 44 minutes on unchanged server hardware and node count.
+    - Integrated multi-node processing, CD-bias and correction support with colleagues, and developed tools for local inspection of very large raster images.
+    result: 'The full engineering trajectory runs from an initial estimate of tens of thousands of hours on a small PC to a measured 24 minutes on six server nodes. Between measured milestones, 800 minutes on the small PC became 24 minutes on the server: 33.3× end-to-end acceleration from the combined algorithm, implementation and platform migration work. Within the same server configuration, 92 → 44 minutes gives a separate 2.09× improvement.'
+    caveat: The initial tens-of-thousands-of-hours figure is an estimate; the intermediate thousands- and tens-of-hours figures are coarse progress-report milestones, not precise timings. The 800 / 92 / 44 / 56 / 24-minute results use the same GDS input and 4-pass workload. Only 92 → 44 holds server hardware and node count fixed; 800 → 24 includes hardware and deployment changes. No precise measured speedup is claimed against the initial estimate.
+    engineering:
+    - title: Memory bounded by the working set
+      text: Resolved out-of-memory failures on 256 GB nodes through block processing, initialization-time buffer allocation and memory reuse, keeping peak memory below 120 GB per node.
+    - title: Recoverable online data delivery
+      text: Designed an online computation–processing pipeline with the equipment team, using a shared filesystem and bidirectional backpressure. Publish configuration files only after the corresponding data blocks are complete; persist task progress to support checkpoint recovery, verified through interruption/restart testing.
+    - title: Task logs across all four subsystems
+      text: Built a FastAPI-based centralized logging platform with unified HTTP ingestion for all four equipment subsystems. Persistent task logs replaced transient console output and enabled device/task-based queries for debugging.
+    validation: Maintain core code and startup/operation documentation for remote support. Work with a tester using an established GDS test library; regression checks are manually executed.
   zh:
-    title: "高性能 GDS 光栅化"
-    period: "2024–2025 · 工程研发"
-    summary: "从小型 PC 上最初预计的数万小时，到六节点服务器实测 24 分钟，覆盖算法重构、Python 到 C++ 移植与分布式部署。"
-    problem: "面向激光直写，将大规模 GDS 版图转换为光栅数据，降低计算与数据加载的时间、内存开销。"
+    title: GDS 光栅化与设备数据流水线
+    period: 2024–至今 · 工程研发
+    summary: 六节点 C++ 光栅化实测 24 分钟，单节点峰值内存低于 120 GB；进一步实现边计算边加工、异常后可恢复的数据流水线。
+    problem: 将超大 GDS 版图转为激光直写所需的亚像素灰度数据，同时控制计算耗时与内存，并协调数据生成和设备加工。
     contributions:
-      - "将光栅化算法由 Python 移植到 C++，持续迭代内核，减少无效计算，并优化并行执行、内存访问与编译设置。"
-      - "将计算任务由小型 PC 迁移至大型多节点服务器，适配 C++ 处理流水线的分布式执行，协同组织计算任务与按需数据读取。"
-      - "实现分块数据读取：每个计算节点只读取自己需要的区域，避免全量加载输入。"
-      - "完善多节点处理、CD bias 与模板校正功能，开发支持百万 × 百万像素图像局部查看的配套工具。"
-    result: "完整工程演进：小型 PC 上最初预计数万小时，最终在六节点服务器上实测 24 分钟。以已实测阶段比较，小型 PC 的 800 分钟降至服务器的 24 分钟，算法、实现与平台迁移共同带来约 33.3 倍端到端加速；同一服务器配置下的 92 → 44 分钟则对应约 2.09 倍优化。"
-    caveat: "最初的“数万小时”为推测值；中间的“数千小时、数十小时”为阶段汇报中的量级描述，不是精确计时。800／92／44／56／24 分钟对应同一 GDS 输入与 4-pass 工作负载。其中仅 92 → 44 分钟保持服务器硬件与节点数一致；800 → 24 分钟包含硬件及部署变化，不将初始估算换算为精确实测加速比。"
+    - 将光栅化内核由 Python 移植至 C++，并持续维护计算光刻核心算法。提出并落地面向多边形边界的亚像素光栅化路线，对边界区域计算覆盖面积、对内部区域填充，并与同事协作完成 Clipper2 集成。
+    - 将 GDS 处理由小型 PC 迁移至多节点服务器。同一 GDS 输入与 4-pass 工作负载的实测阶段由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含硬件及部署变化）；按节点分块读取另使同硬件、同节点数测试由 92 分钟降至 44 分钟。
+    - 与同事协作完善多节点处理、CD bias 与校正功能，并开发超大规模图像局部查看工具。
+    result: 完整工程演进：小型 PC 上最初预计数万小时，最终在六节点服务器上实测 24 分钟。以已实测阶段比较，小型 PC 的 800 分钟降至服务器的 24 分钟，算法、实现与平台迁移共同带来约 33.3 倍端到端加速；同一服务器配置下的 92 → 44 分钟则对应约 2.09 倍优化。
+    caveat: 最初的“数万小时”为推测值；中间的“数千小时、数十小时”为阶段汇报中的量级描述，不是精确计时。800／92／44／56／24 分钟对应同一 GDS 输入与 4-pass 工作负载。其中仅 92 → 44 分钟保持服务器硬件与节点数一致；800 → 24 分钟包含硬件及部署变化，不将初始估算换算为精确实测加速比。
+    engineering:
+    - title: 控制计算工作集，解决内存溢出
+      text: 针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配与缓冲区复用，将单节点峰值内存控制在 120 GB 以下。
+    - title: 可恢复的在线数据交付
+      text: 提出在线计算与加工流水线，并与设备端协同实现共享文件系统上的双向背压。数据块写完后再发布配置文件作为就绪信号；持久化任务进度，支持异常后的断点续算，并完成中断与重启恢复验证。
+    - title: 覆盖四个子系统的任务日志
+      text: 主动开发基于 FastAPI 的集中日志平台，通过统一 HTTP 接口接入整机全部 4 个子系统。将临时控制台输出转为可持久化的任务日志，支持按设备、任务查询与排障。
+    validation: 持续维护核心代码及启动、操作文档，支持远程诊断与维护；与测试同事使用固定 GDS 测试库开展人工回归验证。
   links:
     - url: "http://www.tzoic.com.cn/develops/80"
       en: "Public project-group description"

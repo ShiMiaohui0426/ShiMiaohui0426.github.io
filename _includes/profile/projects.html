@@ -19,8 +19,16 @@
     {% endif %}
     <h3>{{ ui.problem }}</h3><p>{{ item.problem }}</p>
     <h3>{{ ui.approach }}</h3><ul>{% for contribution in item.contributions %}<li>{{ contribution }}</li>{% endfor %}</ul>
+    {% if item.engineering %}
+    <section class="engineering-details" aria-label="{{ ui.engineering }}">
+      <h3>{{ ui.engineering }}</h3>
+      {% for detail in item.engineering %}<div class="engineering-detail"><h4>{{ detail.title }}</h4><p>{{ detail.text }}</p></div>{% endfor %}
+      <p class="note"><strong>{{ ui.verification }}：</strong>{{ item.validation }}</p>
+    </section>
+    {% endif %}
     <h3>{{ ui.result }}</h3><div class="evidence"><p>{{ item.result }}</p></div>
     {% if project.id == 'gds' %}
+    <details class="benchmark-details"><summary>{{ ui.benchmark_details }}</summary>
     <div class="table-wrap"><table>
       {% if lang == 'zh' %}
       <caption>从原理验证到多节点部署的完整演进。早期数值保留原记录的估算／量级性质；分钟级实测记录使用相同 GDS 数据与 4-pass 工作负载。</caption>
@@ -50,8 +58,10 @@
       </tbody>
       {% endif %}
     </table></div>
-    {% endif %}
     <p class="note">{{ item.caveat }}</p>
+    </details>
+    {% endif %}
+    {% unless project.id == 'gds' %}<p class="note">{{ item.caveat }}</p>{% endunless %}
     <div class="link-row">{% for link in project.links %}<a href="{{ link.url }}">{{ link[lang] }}</a>{% endfor %}</div>
   </div>
 </article>

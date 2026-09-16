@@ -3,6 +3,12 @@
 @media(max-width:850px){.header-inner{flex-wrap:wrap;gap:.8rem 1rem}nav{order:3;margin-left:0;flex-basis:100%}.language-link{margin-left:auto}.hero{gap:2rem;grid-template-columns:minmax(0,1fr) 160px;padding-top:3rem}.portrait{width:160px}.project-grid{grid-template-columns:1fr}.metric-grid{gap:1.2rem}.two-column{gap:2rem}.case-heading{grid-template-columns:1fr;gap:0}.case-body{margin-left:0}.timeline-entry{grid-template-columns:8rem 1fr;gap:1rem}}
 @media(max-width:560px){.site-main,.site-footer{padding-left:1.2rem;padding-right:1.2rem}.header-inner{padding:1rem 1.2rem}nav{gap:.3rem 1rem}.hero{grid-template-columns:1fr;gap:1.5rem;padding:2.5rem 0}.hero-portrait{display:none}.hero-lead{font-size:1.1rem}.metric-grid{grid-template-columns:1fr;gap:1.2rem}.metric{padding-bottom:1.2rem;border-bottom:1px solid var(--line)}.metric:last-child{padding-bottom:0;border:0}.metric strong{font-size:1.9rem}.two-column,.skills-grid{grid-template-columns:1fr;gap:1.5rem}.section{padding:2.4rem 0}.timeline-entry{grid-template-columns:1fr;gap:.4rem}.site-footer{flex-direction:column;gap:1.2rem}.footer-links{justify-content:flex-start}.footer-links span{text-align:left}.page-intro{padding-top:2.5rem}.case-study{padding:2rem 0}.evidence{padding:1rem}}
 .project-figures{margin:1.5rem 0 2rem;display:grid;gap:1.5rem}
+.engineering-details{margin:2rem 0;padding:1.4rem 1.5rem;background:var(--wash);border:1px solid var(--line);border-radius:4px}
+.engineering-details>h3{margin-top:0}.engineering-detail{padding:1rem 0;border-top:1px solid var(--line)}
+.engineering-detail h4{font-size:1rem;line-height:1.5;margin:0 0 .4rem;color:var(--navy)}
+.engineering-detail p{margin:0;font-size:.95rem}.engineering-details>.note{margin:1rem 0 0}
+.benchmark-details{margin:1.5rem 0;border-bottom:1px solid var(--line)}
+@media(max-width:560px){.engineering-details{padding:1.1rem}}
 .project-figures--pair{grid-template-columns:repeat(2,minmax(0,1fr));align-items:start}
 .project-figures figure{margin:0;min-width:0}
 .figure-image-link{display:flex;justify-content:center;align-items:center;padding:1rem;border:1px solid var(--line);border-radius:4px;background:#fff}
