@@ -13,6 +13,12 @@
 <div class="metric-grid">
   {% for metric in ui.metrics %}<div class="metric"><strong>{{ metric.value | escape }}</strong><span>{{ metric.label }}</span><small>{{ metric.context }}</small></div>{% endfor %}
 </div>
+<section class="section" aria-labelledby="work-highlights">
+  <div class="section-heading"><h2 id="work-highlights">{{ ui.highlights_title }}</h2></div>
+  <div class="project-grid">
+    {% for highlight in ui.highlights %}<div><h3>{{ highlight.title }}</h3><p class="muted">{{ highlight.text }}</p></div>{% endfor %}
+  </div>
+</section>
 <section class="section">
   <div class="section-heading"><h2>{{ ui.selected_work }}</h2><a href="{{ prefix | append: '/experience/' | relative_url }}">{{ ui.all_projects }}</a></div>
   <div class="project-grid">

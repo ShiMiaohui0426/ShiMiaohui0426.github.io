@@ -108,7 +108,9 @@ def validate(root):
             assert pdf_path in cv_text, "Missing current CV download"
             assert (root / pdf_path.lstrip("/")).read_bytes().startswith(b"%PDF-"), "Invalid CV PDF"
         assert (root / "files/SMH_RESUME.pdf").read_bytes() == (root / "files/Miaohui_Shi_CV_ZH.pdf").read_bytes(), "Legacy PDF must serve the current Chinese CV"
-        assert "33.3" in project_text and "2.09" in project_text, "Missing full-system and same-platform results"
+        assert "44" in project_text and "24" in project_text and "45%" in project_text, "Missing same-configuration optimization result"
+        assert "Clipper2" in project_text and "OpenMP" in project_text, "Missing core implementation contributions"
+        assert "33.3" not in project_text and "2.09" not in project_text, "Superseded acceleration claims must not be reintroduced"
         assert ("数万小时" if prefix else "tens of thousands of hours") in project_text
     print(f"PASS: {len(parsed)} bilingual pages; routes, language pairs, assets, anchors, publication and patent counts.")
 

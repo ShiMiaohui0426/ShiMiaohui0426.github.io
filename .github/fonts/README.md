@@ -17,7 +17,8 @@ From the repository root, with Python 3, ReportLab and PyYAML installed:
 python3 .github/scripts/build-cv.py
 ```
 
-The script reads employment summaries (`cv_details`), education, skills and
+The script reads the opening summary (`cv_summary`), headline metrics (including
+their short `cv_label` / `cv_context` variants), employment summaries (`cv_details`), education, skills and
 academic experience from `_data/profile.yml`, papers from `_data/papers.yml`,
 and the remaining CV copy in `build-cv.py`. Full web descriptions and concise
 PDF employment summaries are maintained together in the profile data.

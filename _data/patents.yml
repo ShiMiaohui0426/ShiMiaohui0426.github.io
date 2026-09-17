@@ -7,11 +7,11 @@
   en:
     title: "Subpixel image processing based on grid-partitioned mask regions"
     status: "Invention patent · granted 20 March 2026"
-    note: "Named co-inventor. Related to boundary-area computation and interior filling in subpixel rasterization. Filed in 2025; the PDF is the application publication (A)."
+    note: "Named co-inventor (fourth listed inventor). Related to boundary-area computation and interior filling in subpixel rasterization. Filed in 2025; the PDF is the application publication (A)."
   zh:
     title: "一种基于掩模版网格化区域的亚像素图像处理方法及系统"
     status: "发明专利 · 2026 年 3 月 20 日授权"
-    note: "共同发明人。对应亚像素光栅化中的边界面积计算与内部填充方法。申请于 2025 年；PDF 链接为申请公开文本（A）。"
+    note: "列名第四发明人。对应亚像素光栅化中的边界面积计算与内部填充方法。申请于 2025 年；PDF 链接为申请公开文本（A）。"
 - id: tactile-jp
   application: "特願2024-059283"
   publications: "JP2025156708A / 特開2025-156708"

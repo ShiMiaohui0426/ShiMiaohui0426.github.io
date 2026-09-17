@@ -1,67 +1,70 @@
 - id: gds
-  index: "01"
-  tags: [C++, Python, GDS, HPC]
+  index: '01'
+  tags:
+  - C++
+  - OpenMP
+  - GDS
+  - Profiling
+  - FastAPI
   figures:
-    - src: /images/projects/gds-subpixel-comparison.png
-      width: 969
-      height: 549
-      source: "https://patents.google.com/patent/CN119987127A/zh"
-      credit: "CN119987127A · Fig. 4 / 图 4"
-      en:
-        alt: "Patent figure comparing a GDS pattern, a binary raster and a subpixel grayscale raster."
-        caption: "GDS pattern → binary raster → subpixel grayscale result, reproduced from the related patent. This illustrates image processing, not the runtime benchmark dataset."
-      zh:
-        alt: "专利附图对比 GDS 图形、二值化图形与亚像素灰度图形。"
-        caption: "GDS 图形 → 二值化图形 → 亚像素图形，摘自相关专利。此图用于说明图像处理效果，不作为耗时测试的数据集展示。"
+  - src: /images/projects/gds-subpixel-comparison.png
+    width: 969
+    height: 549
+    source: https://patents.google.com/patent/CN119987127A/zh
+    credit: CN119987127A · Fig. 4 / 图 4
+    en:
+      alt: Patent figure comparing a GDS pattern, a binary raster and a subpixel grayscale raster.
+      caption: GDS pattern → binary raster → subpixel grayscale result, reproduced from the related patent. This illustrates image processing, not the runtime benchmark dataset.
+    zh:
+      alt: 专利附图对比 GDS 图形、二值化图形与亚像素灰度图形。
+      caption: GDS 图形 → 二值化图形 → 亚像素图形，摘自相关专利。此图用于说明图像处理效果，不作为耗时测试的数据集展示。
   en:
     title: GDS rasterization & equipment data pipelines
-    role: Technical lead for GDS rasterization and data-processing software
+    role: Core computation technical lead (project responsibility)
     period: 2024–present · Industry
-    summary: C++ rasterization on six compute nodes, with a measured 24-minute run, peak memory below 120 GB per node, and a recoverable pipeline that generates data during equipment processing.
+    summary: Technical ownership from a team prototype to a recoverable equipment data pipeline. Loop fusion and targeted geometry optimization cut 4-pass runtime from 44 to 24 minutes on the same six nodes and test data.
     problem: Turn large GDS layouts into subpixel grayscale data for laser direct writing, while controlling runtime and memory and coordinating data delivery with equipment processing.
     contributions:
-    - Led core technical design and software development, coordinated development tasks and equipment interfaces, and maintained core code. Drove performance optimization and complex issue resolution, and helped turn the subpixel method into a granted patent.
-    - Ported the rasterization kernel from Python to C++ and maintain core computational lithography algorithms. Proposed and implemented boundary-focused subpixel rasterization, with detailed area computation at polygon boundaries and filling of interior regions; collaborated with a colleague on Clipper2 integration.
-    - Migrated GDS processing from a small PC to multi-node servers. For the same GDS input and 4-pass workload, measured milestones improved from 800 to 24 minutes (33.3× end to end, including hardware and deployment changes). Partitioned input reads separately reduced 92 to 44 minutes on unchanged server hardware and node count.
-    - Integrated multi-node processing, CD-bias and correction support with colleagues, and developed tools for local inspection of very large raster images.
-    result: 'The full engineering trajectory runs from an initial estimate of tens of thousands of hours on a small PC to a measured 24 minutes on six server nodes. Between measured milestones, 800 minutes on the small PC became 24 minutes on the server: 33.3× end-to-end acceleration from the combined algorithm, implementation and platform migration work. Within the same server configuration, 92 → 44 minutes gives a separate 2.09× improvement.'
-    caveat: The initial tens-of-thousands-of-hours figure is an estimate; the intermediate thousands- and tens-of-hours figures are coarse progress-report milestones, not precise timings. The 800 / 92 / 44 / 56 / 24-minute results use the same GDS input and 4-pass workload. Only 92 → 44 holds server hardware and node count fixed; 800 → 24 includes hardware and deployment changes. No precise measured speedup is claimed against the initial estimate.
+    - 'Take informal technical leadership of the core computation pipeline in a six-person team: evaluate technical options, make performance trade-offs and split development tasks. Coordinate colleagues on line generation, geometry-intersection optimization, parts of correction and equipment communication.'
+    - Building on colleagues' Python prototype, proposed and validated boundary-focused subpixel computation with interior filling. Led the core C++ implementation, OpenMP parallelism and multi-node execution with static spatial partitioning; used prototype experiments to evaluate the implementation route.
+    - Combined loop fusion with flame-graph-guided Clipper2 intersection optimization, collaborating with a colleague on the latter. On the same six-node configuration and test data, reduced 4-pass runtime from 44 to 24 minutes (about 45%); the 24-minute run includes computation, correction and equipment format conversion.
+    result: 'On the same six-node configuration and test data, 4-pass runtime fell from 44 to 24 minutes: about 45% less time, or 1.83× task throughput. The 24-minute run covers computation, correction and equipment format conversion. As of September 2026, equipment integration is under way.'
+    caveat: 'The 44 → 24 comparison is confirmed for the same configuration and data. Earlier milestones document engineering progress: 800 minutes already used C++ and boundary computation; its hardware differs from the 24-minute run. The 92 → 44 stage combined preallocation with overlapping computation and I/O; full comparability across all earlier versions is not established. The 120 GB figure is an observation whose precise memory-accounting scope remains to be documented. Technical leadership describes actual project responsibilities without a formal appointment.'
     engineering:
-    - title: Memory bounded by the working set
-      text: Resolved out-of-memory failures on 256 GB nodes through block processing, initialization-time buffer allocation and memory reuse, keeping peak memory below 120 GB per node.
-    - title: Recoverable online data delivery
-      text: Designed an online computation–processing pipeline with the equipment team, using a shared filesystem and bidirectional backpressure. Publish configuration files only after the corresponding data blocks are complete; persist task progress to support checkpoint recovery, verified through interruption/restart testing.
-    - title: Task logs across all four subsystems
-      text: Built a FastAPI-based centralized logging platform with unified HTTP ingestion for all four equipment subsystems. Persistent task logs replaced transient console output and enabled device/task-based queries for debugging.
-    validation: Maintain core code and startup/operation documentation for remote support. Work with a tester using an established GDS test library; regression checks are manually executed.
+    - title: Bounded memory and overlapping I/O
+      text: Resolved OOM on 256 GB nodes through block processing, initialization-time preallocation and buffer reuse; observed memory use below 120 GB after optimization. Also overlapped I/O with computation and integrated parts of correction into format conversion.
+    - title: Online generation and computational recovery
+      text: Proposed online data generation and implemented the pipeline with the equipment team. Shared-filesystem data-ready signals and bidirectional waiting coordinate production and consumption; persisted stripe-level task state enables computational restart from checkpoints, tested through interruption and recovery.
+    - title: Queryable logs across four subsystems
+      text: Proactively built a Python / FastAPI logging platform, using AI-assisted development, with HTTP ingestion from all four equipment subsystems. Added device registration, log search and filtering so historical task logs remain available during joint debugging.
+    validation: Validate against a full-image baseline and an independent implementation, and support equipment integration. Maintain startup and operation guides that help testers restore the program independently; regression checks use an established GDS test library and are manually executed. The initial Python prototype, correction principles and main GUI were developed by teammates; my contribution centers on the computation pipeline and engineering integration. Named fourth inventor on CN119987127B.
   zh:
     title: GDS 光栅化与设备数据流水线
-    role: GDS 光栅化与数据处理软件技术牵头
+    role: 核心计算链路技术牵头（项目职责）
     period: 2024–至今 · 工程研发
-    summary: 六节点 C++ 光栅化实测 24 分钟，单节点峰值内存低于 120 GB；进一步实现边计算边加工、异常后可恢复的数据流水线。
+    summary: 从团队原型接手并牵头核心链路，推进可恢复的设备数据流水线。通过循环融合与几何求交专项优化，同六节点、同数据下将 4-pass 耗时由 44 降至 24 分钟。
     problem: 将超大 GDS 版图转为激光直写所需的亚像素灰度数据，同时控制计算耗时与内存，并协调数据生成和设备加工。
     contributions:
-    - 牵头核心技术方案设计与软件研发，协调开发分工与设备端接口协同；持续负责核心代码维护、性能优化和复杂问题定位，推动相关技术形成授权专利，并通过操作文档与远程支持保障软件运行维护。
-    - 将光栅化内核由 Python 移植至 C++，并持续维护计算光刻核心算法。提出并落地面向多边形边界的亚像素光栅化路线，对边界区域计算覆盖面积、对内部区域填充，并与同事协作完成 Clipper2 集成。
-    - 将 GDS 处理由小型 PC 迁移至多节点服务器。同一 GDS 输入与 4-pass 工作负载的实测阶段由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含硬件及部署变化）；按节点分块读取另使同硬件、同节点数测试由 92 分钟降至 44 分钟。
-    - 与同事协作完善多节点处理、CD bias 与校正功能，并开发超大规模图像局部查看工具。
-    result: 完整工程演进：小型 PC 上最初预计数万小时，最终在六节点服务器上实测 24 分钟。以已实测阶段比较，小型 PC 的 800 分钟降至服务器的 24 分钟，算法、实现与平台迁移共同带来约 33.3 倍端到端加速；同一服务器配置下的 92 → 44 分钟则对应约 2.09 倍优化。
-    caveat: 最初的“数万小时”为推测值；中间的“数千小时、数十小时”为阶段汇报中的量级描述，不是精确计时。800／92／44／56／24 分钟对应同一 GDS 输入与 4-pass 工作负载。其中仅 92 → 44 分钟保持服务器硬件与节点数一致；800 → 24 分钟包含硬件及部署变化，不将初始估算换算为精确实测加速比。
+    - 在六人团队中承担核心计算链路的非正式技术牵头职责，负责技术路线评估、关键性能取舍和任务拆分；协同推进直线生成、几何求交优化、部分校正及设备通信开发。
+    - 从同事已有的 Python 基础原型接手，提出并验证边界区域精细计算与内部填充方案；主导核心 C++ 链路、OpenMP 并行及按空间静态分区的多节点实现，通过原型实验评估技术路线。
+    - 通过循环融合减少跨阶段中间数据，并依据火焰图定位热点，与同事协作优化 Clipper2 求交路径。同一六节点配置、相同测试数据下，将 4-pass 耗时由 44 分钟降至 24 分钟，下降约 45%；24 分钟包含计算、校正与设备格式转换。
+    result: 同一六节点配置、相同测试数据下，4-pass 耗时由 44 分钟降至 24 分钟，下降约 45%，任务处理速率约为原来的 1.83 倍。24 分钟包含计算、校正与设备格式转换完整链路。截至 2026 年 9 月，项目处于设备侧联调阶段。
+    caveat: 44 → 24 已确认配置与测试数据相同。早期数字用于记录工程演进：800 分钟已是 C++ 边界计算版本，与 24 分钟的硬件不同；92 → 44 的改动包含内存预分配、计算与读写重叠，各早期版本的完整可比条件尚未补齐。120 GB 为优化后的内存观察值，具体统计口径待补。技术牵头指实际项目职责，非正式任命。
     engineering:
-    - title: 控制计算工作集，解决内存溢出
-      text: 针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配与缓冲区复用，将单节点峰值内存控制在 120 GB 以下。
-    - title: 可恢复的在线数据交付
-      text: 提出在线计算与加工流水线，并与设备端协同实现共享文件系统上的双向背压。数据块写完后再发布配置文件作为就绪信号；持久化任务进度，支持异常后的断点续算，并完成中断与重启恢复验证。
-    - title: 覆盖四个子系统的任务日志
-      text: 主动开发基于 FastAPI 的集中日志平台，通过统一 HTTP 接口接入整机全部 4 个子系统。将临时控制台输出转为可持久化的任务日志，支持按设备、任务查询与排障。
-    validation: 持续维护核心代码及启动、操作文档，支持远程诊断与维护；与测试同事使用固定 GDS 测试库开展人工回归验证。
+    - title: 控制工作集，重叠计算与读写
+      text: 针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配及缓冲区复用，优化后观察到运行内存低于 120 GB；推进计算与读写重叠，并将部分校正融入设备格式转换。
+    - title: 在线生成与计算侧断点恢复
+      text: 提出在线数据生成方案，与设备端协同落地共享文件系统上的生产消费流程，通过就绪信号与双向等待协调数据供应；持久化条带级任务状态，支持经中断恢复测试验证的计算侧断点续算。
+    - title: 四个子系统的历史日志可查询
+      text: 主动开发 Python / FastAPI 集中日志平台，开发中使用 AI 辅助，通过 HTTP 接口接入整机全部四个子系统，提供设备注册、日志查询与筛选，使历史任务日志可回溯，支撑跨子系统联调。
+    validation: 开展全图基准对照、独立实现交叉验证及设备联调；维护启动与操作文档，帮助测试同事自主恢复程序运行。与测试同事基于固定 GDS 测试库开展人工回归验证。 初始 Python 原型、校正原理和 GUI 主体由团队其他成员完成，本人贡献集中在核心计算链路及工程整合；为 CN119987127B 列名第四发明人。
   links:
-    - url: "http://www.tzoic.com.cn/develops/80"
-      en: "Public project-group description"
-      zh: "项目组公开介绍"
-    - url: "https://patents.google.com/patent/CN119987127B/zh"
-      en: "Related subpixel-processing patent"
-      zh: "相关亚像素处理专利"
+  - url: http://www.tzoic.com.cn/develops/80
+    en: Public project-group description
+    zh: 项目组公开介绍
+  - url: https://patents.google.com/patent/CN119987127B/zh
+    en: Related subpixel-processing patent
+    zh: 相关亚像素处理专利
 - id: multi-robot
   index: "02"
   tags: [HRI, ROS, Unity, PASAT, NASA-TLX]
