@@ -15,10 +15,12 @@
         caption: "GDS 图形 → 二值化图形 → 亚像素图形，摘自相关专利。此图用于说明图像处理效果，不作为耗时测试的数据集展示。"
   en:
     title: GDS rasterization & equipment data pipelines
+    role: Technical lead for GDS rasterization and data-processing software
     period: 2024–present · Industry
     summary: C++ rasterization on six compute nodes, with a measured 24-minute run, peak memory below 120 GB per node, and a recoverable pipeline that generates data during equipment processing.
     problem: Turn large GDS layouts into subpixel grayscale data for laser direct writing, while controlling runtime and memory and coordinating data delivery with equipment processing.
     contributions:
+    - Led core technical design and software development, coordinated development tasks and equipment interfaces, and maintained core code. Drove performance optimization and complex issue resolution, and helped turn the subpixel method into a granted patent.
     - Ported the rasterization kernel from Python to C++ and maintain core computational lithography algorithms. Proposed and implemented boundary-focused subpixel rasterization, with detailed area computation at polygon boundaries and filling of interior regions; collaborated with a colleague on Clipper2 integration.
     - Migrated GDS processing from a small PC to multi-node servers. For the same GDS input and 4-pass workload, measured milestones improved from 800 to 24 minutes (33.3× end to end, including hardware and deployment changes). Partitioned input reads separately reduced 92 to 44 minutes on unchanged server hardware and node count.
     - Integrated multi-node processing, CD-bias and correction support with colleagues, and developed tools for local inspection of very large raster images.
@@ -34,10 +36,12 @@
     validation: Maintain core code and startup/operation documentation for remote support. Work with a tester using an established GDS test library; regression checks are manually executed.
   zh:
     title: GDS 光栅化与设备数据流水线
+    role: GDS 光栅化与数据处理软件技术牵头
     period: 2024–至今 · 工程研发
     summary: 六节点 C++ 光栅化实测 24 分钟，单节点峰值内存低于 120 GB；进一步实现边计算边加工、异常后可恢复的数据流水线。
     problem: 将超大 GDS 版图转为激光直写所需的亚像素灰度数据，同时控制计算耗时与内存，并协调数据生成和设备加工。
     contributions:
+    - 牵头核心技术方案设计与软件研发，协调开发分工与设备端接口协同；持续负责核心代码维护、性能优化和复杂问题定位，推动相关技术形成授权专利，并通过操作文档与远程支持保障软件运行维护。
     - 将光栅化内核由 Python 移植至 C++，并持续维护计算光刻核心算法。提出并落地面向多边形边界的亚像素光栅化路线，对边界区域计算覆盖面积、对内部区域填充，并与同事协作完成 Clipper2 集成。
     - 将 GDS 处理由小型 PC 迁移至多节点服务器。同一 GDS 输入与 4-pass 工作负载的实测阶段由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含硬件及部署变化）；按节点分块读取另使同硬件、同节点数测试由 92 分钟降至 44 分钟。
     - 与同事协作完善多节点处理、CD bias 与校正功能，并开发超大规模图像局部查看工具。

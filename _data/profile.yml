@@ -9,7 +9,7 @@ en:
     - {id: patents, label: Patents, path: /patents/}
     - {id: cv, label: CV, path: /cv/}
   footer: "High-performance computing · Human–robot interaction · Tactile sensing"
-  updated: "Updated 16 September 2026"
+  updated: "Updated 17 September 2026"
   role: "Algorithm engineer · Robotics researcher"
   lead: "High-performance algorithms, built for reliable equipment operation."
   intro: "I am an algorithm engineer at Taizhou Optoelectronics Industry Innovation Center, developing C++ and Python software for computational lithography. My work spans GDS rasterization, distributed computation, memory optimization and recoverable data pipelines. I received my master's degree from Waseda University in March 2024, with research experience in multi-robot interaction and high-speed vision-based tactile sensing."
@@ -84,9 +84,12 @@ en:
   employment_entries:
     - period: "Sep 2024–present"
       title: "Algorithm Engineer"
+      project_role: "Technical lead for GDS rasterization and data-processing software"
+      cv_role: "GDS software technical lead"
       organization: "Taizhou Optoelectronics Industry Innovation Center · Taizhou, China"
       cv_organization: "Taizhou Optoelectronics Industry Innovation Center"
       details:
+        - "Lead core technical design and software development for GDS rasterization and data processing. Coordinate development tasks and equipment interfaces, maintain core code, and drive performance optimization and complex issue resolution. Helped turn the subpixel method into a granted patent, and support operation and maintenance through documentation and remote assistance."
         - "Ported the rasterization kernel from Python to C++ and maintain core computational lithography algorithms. Proposed and implemented boundary-focused subpixel rasterization, with detailed area computation at polygon boundaries and filling of interior regions; collaborated with a colleague on Clipper2 integration."
         - "Migrated GDS processing from a small PC to multi-node servers. For the same GDS input and 4-pass workload, measured milestones improved from 800 to 24 minutes (33.3× end to end, including hardware and deployment changes). Partitioned input reads separately reduced 92 to 44 minutes on unchanged server hardware and node count."
         - "Resolved out-of-memory failures on 256 GB nodes through block processing, initialization-time buffer allocation and memory reuse, keeping peak memory below 120 GB per node."
@@ -98,7 +101,7 @@ en:
         - "Partitioned reads: 92 to 44 min on unchanged hardware and node count. Block processing, preallocation and buffer reuse resolved OOM on 256 GB nodes; peak memory below 120 GB per node."
         - "Designed a shared-filesystem pipeline to compute during equipment processing, with backpressure and data-ready signals. Persisted task progress for checkpoint recovery; verified interruption/restart behavior."
         - "Built a FastAPI logging platform covering all four equipment subsystems, with persistent task logs and device/task queries for debugging."
-        - "Maintain core code and operation documentation for remote support; collaborate on manual regression using a fixed GDS test library."
+        - "Coordinate development tasks and equipment interfaces; maintain core code and operation documentation for remote support. Collaborate on manual regression using a fixed GDS test library."
     - period: "Apr–Aug 2024"
       title: "Algorithm Development"
       organization: "Hesai Technology / Sharpa-related R&D · 禾赛科技"
@@ -140,7 +143,7 @@ zh:
     - {id: patents, label: 专利, path: /patents/}
     - {id: cv, label: 简历, path: /cv/}
   footer: "高性能计算 · 人机交互 · 触觉感知"
-  updated: "更新于 2026 年 9 月 16 日"
+  updated: "更新于 2026 年 9 月 17 日"
   role: "算法工程师 · 机器人研究"
   lead: "把高性能算法做成可稳定运行的设备软件。"
   intro: "我目前在台州光电产业创新中心担任算法工程师，使用 C++ 与 Python 开发计算光刻相关软件，工作涵盖 GDS 光栅化、分布式计算、内存优化与可恢复的数据流水线。2024 年 3 月硕士毕业于早稻田大学，研究经历涉及多机器人人机交互与高速视触觉感知。"
@@ -211,9 +214,12 @@ zh:
   employment_entries:
     - period: "2024.09–至今"
       title: "算法工程师"
+      project_role: "GDS 光栅化与数据处理软件技术牵头"
+      cv_role: "GDS 光栅化与数据处理软件技术牵头"
       organization: "台州光电产业创新中心 · 中国台州"
       cv_organization: "台州光电产业创新中心"
       details:
+        - "牵头核心技术方案设计与软件研发，提出边界稀疏光栅化及计算—加工流水线方案，协调开发分工与设备端接口协同；持续负责核心代码维护、性能优化和复杂问题定位，推动相关技术形成授权专利，并通过操作文档与远程支持保障软件运行维护。"
         - "将光栅化内核由 Python 移植至 C++，并持续维护计算光刻核心算法。提出并落地面向多边形边界的亚像素光栅化路线，对边界区域计算覆盖面积、对内部区域填充，并与同事协作完成 Clipper2 集成。"
         - "将 GDS 处理由小型 PC 迁移至多节点服务器。同一 GDS 输入与 4-pass 工作负载的实测阶段由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含硬件及部署变化）；按节点分块读取另使同硬件、同节点数测试由 92 分钟降至 44 分钟。"
         - "针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配与缓冲区复用，将单节点峰值内存控制在 120 GB 以下。"
@@ -225,7 +231,7 @@ zh:
         - "按节点分块读取使同硬件、同节点数测试由 92 分钟降至 44 分钟；通过分块计算、初始化预分配及缓冲区复用，解决 256 GB 节点 OOM，将单节点峰值内存控制在 120 GB 以下。"
         - "设计计算与设备加工并行的在线流水线，基于共享文件系统、双向背压与数据就绪信号协调生产消费；持久化任务进度，支持断点续算并完成中断、重启恢复验证。"
         - "开发 FastAPI 集中日志平台，接入整机全部 4 个子系统，实现任务日志持久化与按设备、任务查询，支持联调排障。"
-        - "维护核心代码及启动、操作文档，支持远程维护；与测试同事基于固定 GDS 测试库开展人工回归验证。"
+        - "协调开发分工与设备端接口协同，负责核心代码维护及复杂问题定位；维护启动、操作文档并支持远程维护，与测试同事基于固定 GDS 测试库开展人工回归验证。"
     - period: "2024.04–2024.08"
       title: "算法研发"
       organization: "禾赛科技 / Sharpa 相关研发"

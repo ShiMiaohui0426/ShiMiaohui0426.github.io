@@ -4,6 +4,7 @@
 <article class="case-study" id="{{ project.id }}">
   <div class="case-heading"><p class="eyebrow">{{ project.index }} /</p><div><p class="metadata">{{ item.period }}</p><h2>{{ item.title }}</h2></div></div>
   <div class="case-body">
+    {% if item.role %}<p class="metadata"><strong>{{ item.role }}</strong></p>{% endif %}
     <ul class="tag-list">{% for tag in project.tags %}<li>{{ tag }}</li>{% endfor %}</ul>
     {% if project.figures %}
     <div class="project-figures{% if project.figures.size > 1 and project.figure_layout != 'stacked' %} project-figures--pair{% endif %}">

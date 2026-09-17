@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = yaml.safe_load((ROOT / '_data/profile.yml').read_text(encoding='utf-8'))
 PAPERS = yaml.safe_load((ROOT / '_data/papers.yml').read_text(encoding='utf-8'))
 BASE = 'https://shimiaohui0426.github.io'
-UPDATED = '2026-09-16'
+UPDATED = '2026-09-17'
 FONT_DIR = ROOT / '.github/fonts'
 for weight in ('Regular', 'Bold'):
     pdfmetrics.registerFont(TTFont('CV-' + weight, str(FONT_DIR / f'NotoSansSC-CV-{weight}.ttf')))
@@ -36,7 +36,7 @@ COPY = {
   ('High-speed vision-based tactile sensing | ICAT-EGVE 2024', 'Independently developed algorithmic principles, implementation, performance tuning and the front-end UI. The method combines local sparse marker tracking with force estimation using an asymmetric stiffness-coefficient matrix. The paper reports 601.25 Hz sensor-system force acquisition; this is not a standalone algorithm benchmark.')],
  'papers':'PUBLICATIONS', 'patents':'PATENTS',
  'interest':'RESEARCH DIRECTION', 'interest_text':'Future doctoral research interest: household service robots, tactile perception, human-robot collaboration and appropriate automation. Industry interests include EDA, computational lithography and high-performance algorithm engineering.',
- 'foot':'Updated 16 Sep 2026 | Runtime benchmarks recorded in 2024-2025',
+ 'foot':'Updated 17 Sep 2026 | Runtime benchmarks recorded in 2024-2025',
 },
 'zh': {
  'name':'施妙辉', 'role':'算法工程师 | 高性能计算与机器人研究',
@@ -48,7 +48,7 @@ COPY = {
   ('高速视触觉感知算法与软件 | ICAT-EGVE 2024','独立完成算法原理设计、代码实现、性能调优及前端 UI。通过帧间局部稀疏标记点搜索与非对称刚度系数矩阵进行力估计。论文报告系统力信息采集速率为 601.25 Hz，此数值并非单独算法的性能基准。')],
  'papers':'发表论文', 'patents':'专利成果',
  'interest':'研究方向', 'interest_text':'未来博士研究兴趣：家庭服务机器人、触觉感知、人机协作与适度自动化。产业方向关注 EDA、计算光刻与高性能算法工程。',
- 'foot':'更新于 2026-09-16 | 耗时基准记录于 2024-2025 年',
+ 'foot':'更新于 2026-09-17 | 耗时基准记录于 2024-2025 年',
 }}
 
 # A4, generous outer margins, one reading column and restrained teal accents.
@@ -266,7 +266,8 @@ class Resume:
         self.metrics()
         self.section(self.c['work'])
         for job in self.ui['employment_entries']:
-            self.job(job['period'], job['title'], job.get('cv_organization', job['organization']),
+            title = job['title'] + (' | ' + job['cv_role'] if job.get('cv_role') else '')
+            self.job(job['period'], title, job.get('cv_organization', job['organization']),
                      job.get('cv_details', job['details']))
         self.education()
         self.skills()
