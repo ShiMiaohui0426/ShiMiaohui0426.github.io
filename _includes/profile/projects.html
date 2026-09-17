@@ -32,30 +32,30 @@
     <details class="benchmark-details"><summary>{{ ui.benchmark_details }}</summary>
     <div class="table-wrap"><table>
       {% if lang == 'zh' %}
-      <caption>从原理验证到多节点部署的完整演进。早期数值保留原记录的估算／量级性质；分钟级实测记录使用相同 GDS 数据与 4-pass 工作负载。</caption>
+      <caption>从原理验证到多节点部署的工程演进。早期记录为估算或量级描述；44 → 24 分钟为已确认同六节点、同数据的 4-pass 对照。</caption>
       <thead><tr><th scope="col">阶段与工程工作</th><th scope="col">平台</th><th scope="col">耗时</th><th scope="col">记录性质</th></tr></thead>
       <tbody>
         <tr><td>2024 · 初步调研与数学原理</td><td>小型 PC</td><td>数万小时</td><td>完整任务初始推测</td></tr>
-        <tr><td>2024 · Python 原型、先验裁剪与并行计算</td><td>小型 PC</td><td>数千小时</td><td>阶段汇报量级</td></tr>
+        <tr><td>2024.10 · Python、边界计算与并行思路</td><td>小型 PC</td><td>数千小时</td><td>阶段汇报量级</td></tr>
         <tr><td>2024 · C++ 框架移植</td><td>小型 PC</td><td>数十小时</td><td>阶段汇报量级</td></tr>
-        <tr><td>2024.12 · V5，访存与编译优化</td><td>小型 PC</td><td>800 分钟</td><td>4-pass 实测</td></tr>
-        <tr><td>2025.07 · V6，迁移并适配分布式计算</td><td>多节点服务器</td><td>92 分钟</td><td>4-pass 实测</td></tr>
-        <tr><td>2025.10 · V7，按节点分块读取</td><td>同一服务器配置与节点数</td><td>44 分钟</td><td>4-pass 实测</td></tr>
+        <tr><td>2024.12 · V5，C++ 边界计算、访存与编译优化</td><td>小型 PC</td><td>800 分钟</td><td>4-pass 实测；平台不同</td></tr>
+        <tr><td>2025.07 · V6，多节点适配与 CD bias</td><td>六节点服务器</td><td>92 分钟</td><td>4-pass 实测</td></tr>
+        <tr><td>2025.10 · V7，内存预分配、计算与读写重叠</td><td>六节点服务器</td><td>44 分钟</td><td>4-pass 实测；后续优化基准</td></tr>
         <tr><td>2025.12 · 多节点部署</td><td>四节点服务器</td><td>56 分钟</td><td>4-pass 实测，独立配置</td></tr>
-        <tr><td>2025.12 · 多节点部署</td><td>六节点服务器</td><td>24 分钟</td><td>4-pass 实测，最快记录</td></tr>
+        <tr><td>2025.12 · 循环融合与几何求交专项优化</td><td>六节点；与 44 分钟记录配置相同</td><td>24 分钟</td><td>4-pass 实测；含计算、校正与格式转换</td></tr>
       </tbody>
       {% else %}
-      <caption>Full progression from mathematical groundwork to multi-node deployment. Early entries retain their estimate / order-of-magnitude status. Minute-level measurements use the same GDS data and 4-pass workload.</caption>
+      <caption>Engineering progression from mathematical groundwork to multi-node deployment. Early entries are estimates or coarse milestones. The 44 → 24-minute comparison is confirmed for the same six nodes, data and 4-pass workload.</caption>
       <thead><tr><th scope="col">Stage & engineering work</th><th scope="col">Platform</th><th scope="col">Elapsed time</th><th scope="col">Evidence type</th></tr></thead>
       <tbody>
         <tr><td>2024 · Initial study and mathematical principles</td><td>Small PC</td><td>Tens of thousands of hours</td><td>Initial full-task estimate</td></tr>
-        <tr><td>2024 · Python prototype, pruning and parallelism</td><td>Small PC</td><td>Thousands of hours</td><td>Coarse progress-report milestone</td></tr>
+        <tr><td>Oct 2024 · Python, boundary computation and parallelism</td><td>Small PC</td><td>Thousands of hours</td><td>Coarse progress-report milestone</td></tr>
         <tr><td>2024 · C++ framework port</td><td>Small PC</td><td>Tens of hours</td><td>Coarse progress-report milestone</td></tr>
-        <tr><td>Dec 2024 · V5, memory and compiler optimization</td><td>Small PC</td><td>800 min</td><td>4-pass measurement</td></tr>
-        <tr><td>Jul 2025 · V6, server migration and distributed adaptation</td><td>Multi-node server</td><td>92 min</td><td>4-pass measurement</td></tr>
-        <tr><td>Oct 2025 · V7, node-local partitioned reads</td><td>Same server configuration and node count</td><td>44 min</td><td>4-pass measurement</td></tr>
+        <tr><td>Dec 2024 · V5, C++ boundary computation, memory and compiler optimization</td><td>Small PC</td><td>800 min</td><td>4-pass measurement; different platform</td></tr>
+        <tr><td>Jul 2025 · V6, multi-node adaptation and CD bias</td><td>Six-node server</td><td>92 min</td><td>4-pass measurement</td></tr>
+        <tr><td>Oct 2025 · V7, preallocation and overlapping computation / I/O</td><td>Six-node server</td><td>44 min</td><td>4-pass measurement; optimization baseline</td></tr>
         <tr><td>Dec 2025 · Multi-node deployment</td><td>Four-node server</td><td>56 min</td><td>4-pass measurement, separate configuration</td></tr>
-        <tr><td>Dec 2025 · Multi-node deployment</td><td>Six-node server</td><td>24 min</td><td>4-pass measurement, fastest recorded run</td></tr>
+        <tr><td>Dec 2025 · Loop fusion and targeted geometry optimization</td><td>Six nodes; same configuration as the 44-min run</td><td>24 min</td><td>4-pass measurement; computation, correction and format conversion</td></tr>
       </tbody>
       {% endif %}
     </table></div>

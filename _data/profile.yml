@@ -12,20 +12,26 @@ en:
   updated: "Updated 17 September 2026"
   role: "Algorithm engineer · Robotics researcher"
   lead: "High-performance algorithms, built for reliable equipment operation."
-  intro: "I am an algorithm engineer at Taizhou Optoelectronics Industry Innovation Center, developing C++ and Python software for computational lithography. My work spans GDS rasterization, distributed computation, memory optimization and recoverable data pipelines. I received my master's degree from Waseda University in March 2024, with research experience in multi-robot interaction and high-speed vision-based tactile sensing."
+  intro: "I am an algorithm engineer at Taizhou Optoelectronics Industry Innovation Center, taking technical ownership of the core GDS data-processing pipeline. Building on the team's Python prototype, I proposed boundary-focused subpixel rasterization and led C++ engineering, performance optimization and multi-node execution. My work connects algorithms with recoverable data delivery and equipment diagnostics. I earned my master's degree at Waseda University in March 2024, researching multi-robot interaction and vision-based tactile sensing."
   location: "Taizhou, Zhejiang, China"
   explore: "Explore selected work"
   cv_link: "View CV"
   metrics:
-    - value: "800 → 24 min"
-      label: "GDS · 33.3× end-to-end acceleration"
-      context: "Same GDS input and 4-pass workload; algorithm, hardware and deployment changes."
-    - value: "< 120 GB"
-      label: "Peak memory per compute node"
-      context: "Block processing and buffer reuse resolved OOM on 256 GB nodes."
-    - value: "4 / 4"
-      label: "Equipment subsystems with unified logging"
-      context: "FastAPI ingestion, persistent task logs and a shared debugging entry point."
+  - value: 44 → 24 min
+    label: 4-pass processing time reduced by about 45%
+    context: Same six-node configuration and test data; 24 minutes includes computation, correction and format conversion.
+    cv_label: 4-pass processing time
+    cv_context: About 45% less · same 6 nodes / data
+  - value: < 120 GB
+    label: Observed memory use after optimization
+    context: Block processing, preallocation and buffer reuse resolved OOM on 256 GB nodes.
+    cv_label: Observed memory use
+    cv_context: Block processing · OOM resolved
+  - value: 4 / 4
+    label: Equipment subsystems with unified logging
+    context: FastAPI ingestion, searchable task history and a shared debugging entry point.
+    cv_label: Subsystems with unified logs
+    cv_context: FastAPI · searchable task history
   selected_work: "Selected work"
   all_projects: "Project details"
   selected_papers: "Selected publications"
@@ -36,8 +42,8 @@ en:
   toolkit: "Technical toolkit"
   skills:
     - title: "Performance & engineering"
-      text: "C++ · Python · Linux / Ubuntu · parallel and distributed processing · memory and I/O optimization · GDS rasterization"
-      cv_text: "C++ · Python · Linux · distributed processing · memory / I/O optimization · GDS rasterization"
+      text: "C++ · Python · OpenMP · Linux · flame-graph profiling · memory / I/O optimization · GDS rasterization"
+      cv_text: "C++ · OpenMP · Python · Linux · profiling · memory / I/O optimization"
     - title: "Vision & learning"
       text: "YOLO · semantic segmentation · anomaly detection · model training and optimization · vision-based tactile sensing"
       cv_text: "YOLO · segmentation · anomaly detection · model training · vision-based tactile sensing"
@@ -84,24 +90,24 @@ en:
   employment_entries:
     - period: "Sep 2024–present"
       title: "Algorithm Engineer"
-      project_role: "Technical lead for GDS rasterization and data-processing software"
-      cv_role: "GDS software technical lead"
+      project_role: "Core computation technical lead (project responsibility)"
+      cv_role: "Core computation technical lead (project role)"
       organization: "Taizhou Optoelectronics Industry Innovation Center · Taizhou, China"
       cv_organization: "Taizhou Optoelectronics Industry Innovation Center"
       details:
-        - "Lead core technical design and software development for GDS rasterization and data processing. Coordinate development tasks and equipment interfaces, maintain core code, and drive performance optimization and complex issue resolution. Helped turn the subpixel method into a granted patent, and support operation and maintenance through documentation and remote assistance."
-        - "Ported the rasterization kernel from Python to C++ and maintain core computational lithography algorithms. Proposed and implemented boundary-focused subpixel rasterization, with detailed area computation at polygon boundaries and filling of interior regions; collaborated with a colleague on Clipper2 integration."
-        - "Migrated GDS processing from a small PC to multi-node servers. For the same GDS input and 4-pass workload, measured milestones improved from 800 to 24 minutes (33.3× end to end, including hardware and deployment changes). Partitioned input reads separately reduced 92 to 44 minutes on unchanged server hardware and node count."
-        - "Resolved out-of-memory failures on 256 GB nodes through block processing, initialization-time buffer allocation and memory reuse, keeping peak memory below 120 GB per node."
-        - "Designed an online computation–processing pipeline with the equipment team, using a shared filesystem and bidirectional backpressure. Publish configuration files only after the corresponding data blocks are complete; persist task progress to support checkpoint recovery, verified through interruption/restart testing."
-        - "Built a FastAPI-based centralized logging platform with unified HTTP ingestion for all four equipment subsystems. Persistent task logs replaced transient console output and enabled device/task-based queries for debugging."
-        - "Maintain core code and startup/operation documentation for remote support. Work with a tester using an established GDS test library; regression checks are manually executed."
+      - 'Take informal technical leadership of the core computation pipeline in a six-person team: evaluate technical options, make performance trade-offs and split development tasks. Coordinate colleagues on line generation, geometry-intersection optimization, parts of correction and equipment communication.'
+      - Building on colleagues' Python prototype, proposed and validated boundary-focused subpixel computation with interior filling. Led the core C++ implementation, OpenMP parallelism and multi-node execution with static spatial partitioning; used prototype experiments to evaluate the implementation route.
+      - Combined loop fusion with flame-graph-guided Clipper2 intersection optimization, collaborating with a colleague on the latter. On the same six-node configuration and test data, reduced 4-pass runtime from 44 to 24 minutes (about 45%); the 24-minute run includes computation, correction and equipment format conversion.
+      - Resolved OOM on 256 GB nodes through block processing, initialization-time preallocation and buffer reuse; observed memory use below 120 GB after optimization. Also overlapped I/O with computation and integrated parts of correction into format conversion.
+      - Proposed online data generation and implemented the pipeline with the equipment team. Shared-filesystem data-ready signals and bidirectional waiting coordinate production and consumption; persisted stripe-level task state enables computational restart from checkpoints, tested through interruption and recovery.
+      - Proactively built a Python / FastAPI logging platform, using AI-assisted development, with HTTP ingestion from all four equipment subsystems. Added device registration, log search and filtering so historical task logs remain available during joint debugging.
+      - Validate against a full-image baseline and an independent implementation, and support equipment integration. Maintain startup and operation guides that help testers restore the program independently; regression checks use an established GDS test library and are manually executed.
       cv_details:
-        - "Designed boundary-focused subpixel rasterization; ported Python to C++ and deployed across six nodes. Same GDS / 4-pass workload: 800 to 24 min (33.3× end to end, including platform changes)."
-        - "Partitioned reads: 92 to 44 min on unchanged hardware and node count. Block processing, preallocation and buffer reuse resolved OOM on 256 GB nodes; peak memory below 120 GB per node."
-        - "Designed a shared-filesystem pipeline to compute during equipment processing, with backpressure and data-ready signals. Persisted task progress for checkpoint recovery; verified interruption/restart behavior."
-        - "Built a FastAPI logging platform covering all four equipment subsystems, with persistent task logs and device/task queries for debugging."
-        - "Coordinate development tasks and equipment interfaces; maintain core code and operation documentation for remote support. Collaborate on manual regression using a fixed GDS test library."
+      - Guide core technical decisions and task coordination in a six-person team. Building on colleagues' Python prototype, proposed boundary-focused rasterization and led C++ / OpenMP and multi-node implementation.
+      - Loop fusion and flame-graph-guided Clipper2 optimization cut 4-pass runtime from 44 to 24 min (about 45%) on the same six nodes and test data. The 24-min run includes correction and format conversion.
+      - Block processing, preallocation and buffer reuse resolved OOM on 256 GB nodes; observed memory use below 120 GB. Overlapped I/O with computation and reduced intermediate data.
+      - Proposed an online equipment data pipeline with shared-filesystem readiness signals and backpressure. Persisted stripe-level state enables computational checkpoint recovery, verified by interruption tests.
+      - Built FastAPI logging for all four equipment subsystems. Maintain startup / operation guides for remote support; collaborate with testers on manual regression using a fixed GDS library.
     - period: "Apr–Aug 2024"
       title: "Algorithm Development"
       organization: "Hesai Technology / Sharpa-related R&D · 禾赛科技"
@@ -132,6 +138,15 @@ en:
   engineering: "From computation to reliable operation"
   benchmark_details: "Performance milestones and measurement scope"
   verification: "Validation and maintenance"
+  cv_summary: "Algorithm engineer taking technical ownership of core computational lithography software: boundary-focused algorithms, C++ performance optimization and recoverable multi-node pipelines. Waseda M.S.; research in human-robot interaction and tactile sensing."
+  highlights_title: "Engineering highlights"
+  highlights:
+  - title: Technical ownership
+    text: Guide core technical decisions, split implementation tasks and coordinate equipment interfaces in a six-person team.
+  - title: Algorithm & performance
+    text: Propose boundary-focused computation; combine loop fusion, flame-graph analysis and targeted Clipper2 optimization.
+  - title: Equipment integration & support
+    text: Generate data during processing, recover computation from checkpoints, and support joint debugging with logs and operation guides.
 zh:
   description: "施妙辉，台州光电产业创新中心算法工程师，关注 C++ 高性能计算、计算光刻、多机器人人机交互与高速视触觉感知。"
   skip: "跳转到正文"
@@ -146,20 +161,27 @@ zh:
   updated: "更新于 2026 年 9 月 17 日"
   role: "算法工程师 · 机器人研究"
   lead: "把高性能算法做成可稳定运行的设备软件。"
-  intro: "我目前在台州光电产业创新中心担任算法工程师，使用 C++ 与 Python 开发计算光刻相关软件，工作涵盖 GDS 光栅化、分布式计算、内存优化与可恢复的数据流水线。2024 年 3 月硕士毕业于早稻田大学，研究经历涉及多机器人人机交互与高速视触觉感知。"
+  intro: "我目前在台州光电产业创新中心担任算法工程师，承担 GDS 数据处理核心计算链路的技术牵头职责。从团队已有的 Python 原型接手，提出边界稀疏计算路线，推进 C++ 工程化、性能优化与多节点运行，并将算法衔接到可恢复的数据交付和设备联调。2024 年 3 月硕士毕业于早稻田大学，研究经历涉及多机器人人机交互与高速视触觉感知。"
   location: "中国 · 浙江台州"
   explore: "查看代表项目"
   cv_link: "查看简历"
   metrics:
-    - value: "800 → 24 分钟"
-      label: "GDS · 约 33.3 倍端到端加速"
-      context: "同一 GDS 输入、4-pass 工作负载；包含算法、硬件与部署变化。"
-    - value: "< 120 GB"
-      label: "单节点峰值内存"
-      context: "通过分块计算与内存复用，解决 256 GB 节点上的 OOM 问题。"
-    - value: "4 / 4"
-      label: "整机子系统日志全量接入"
-      context: "统一 FastAPI 接口、任务日志持久化与集中查询，支持联调排障。"
+  - value: 44 → 24 分钟
+    label: 4-pass 处理耗时下降约 45%
+    context: 同一六节点配置、相同测试数据；24 分钟包含计算、校正与设备格式转换。
+    cv_value: 44 → 24 min
+    cv_label: 4-pass 处理耗时
+    cv_context: 下降约 45% · 同六节点、同数据
+  - value: < 120 GB
+    label: 优化后的运行内存观察值
+    context: 分块计算、初始化预分配与缓冲区复用，解决 256 GB 节点上的 OOM 问题。
+    cv_label: 运行内存观察值
+    cv_context: 分块与复用 · 解决 OOM
+  - value: 4 / 4
+    label: 整机子系统全部接入日志平台
+    context: FastAPI 统一接入、历史任务日志查询与筛选，支持跨子系统联调。
+    cv_label: 整机子系统日志接入
+    cv_context: FastAPI · 历史任务日志可查询
   selected_work: "代表项目"
   all_projects: "项目详情"
   selected_papers: "代表论文"
@@ -170,7 +192,7 @@ zh:
   toolkit: "技术能力"
   skills:
     - title: "高性能计算与工程"
-      text: "C++ · Python · Linux / Ubuntu · 并行与分布式处理 · 内存及 I/O 优化 · GDS 光栅化"
+      text: "C++ · Python · OpenMP · Linux · 火焰图分析 · 内存及 I/O 优化 · GDS 光栅化"
     - title: "视觉与机器学习"
       text: "YOLO · 语义分割 · 异常检测 · 模型训练与优化 · 视触觉感知"
     - title: "机器人与人机交互"
@@ -214,24 +236,24 @@ zh:
   employment_entries:
     - period: "2024.09–至今"
       title: "算法工程师"
-      project_role: "GDS 光栅化与数据处理软件技术牵头"
-      cv_role: "GDS 光栅化与数据处理软件技术牵头"
+      project_role: "核心计算链路技术牵头（项目职责）"
+      cv_role: "核心计算链路技术牵头（项目职责）"
       organization: "台州光电产业创新中心 · 中国台州"
       cv_organization: "台州光电产业创新中心"
       details:
-        - "牵头核心技术方案设计与软件研发，提出边界稀疏光栅化及计算—加工流水线方案，协调开发分工与设备端接口协同；持续负责核心代码维护、性能优化和复杂问题定位，推动相关技术形成授权专利，并通过操作文档与远程支持保障软件运行维护。"
-        - "将光栅化内核由 Python 移植至 C++，并持续维护计算光刻核心算法。提出并落地面向多边形边界的亚像素光栅化路线，对边界区域计算覆盖面积、对内部区域填充，并与同事协作完成 Clipper2 集成。"
-        - "将 GDS 处理由小型 PC 迁移至多节点服务器。同一 GDS 输入与 4-pass 工作负载的实测阶段由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含硬件及部署变化）；按节点分块读取另使同硬件、同节点数测试由 92 分钟降至 44 分钟。"
-        - "针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配与缓冲区复用，将单节点峰值内存控制在 120 GB 以下。"
-        - "提出在线计算与加工流水线，并与设备端协同实现共享文件系统上的双向背压。数据块写完后再发布配置文件作为就绪信号；持久化任务进度，支持异常后的断点续算，并完成中断与重启恢复验证。"
-        - "主动开发基于 FastAPI 的集中日志平台，通过统一 HTTP 接口接入整机全部 4 个子系统。将临时控制台输出转为可持久化的任务日志，支持按设备、任务查询与排障。"
-        - "持续维护核心代码及启动、操作文档，支持远程诊断与维护；与测试同事使用固定 GDS 测试库开展人工回归验证。"
+      - 在六人团队中承担核心计算链路的非正式技术牵头职责，负责技术路线评估、关键性能取舍和任务拆分；协同推进直线生成、几何求交优化、部分校正及设备通信开发。
+      - 从同事已有的 Python 基础原型接手，提出并验证边界区域精细计算与内部填充方案；主导核心 C++ 链路、OpenMP 并行及按空间静态分区的多节点实现，通过原型实验评估技术路线。
+      - 通过循环融合减少跨阶段中间数据，并依据火焰图定位热点，与同事协作优化 Clipper2 求交路径。同一六节点配置、相同测试数据下，将 4-pass 耗时由 44 分钟降至 24 分钟，下降约 45%；24 分钟包含计算、校正与设备格式转换。
+      - 针对 256 GB 节点上的 OOM 问题，采用分块计算、初始化预分配及缓冲区复用，优化后观察到运行内存低于 120 GB；推进计算与读写重叠，并将部分校正融入设备格式转换。
+      - 提出在线数据生成方案，与设备端协同落地共享文件系统上的生产消费流程，通过就绪信号与双向等待协调数据供应；持久化条带级任务状态，支持经中断恢复测试验证的计算侧断点续算。
+      - 主动开发 Python / FastAPI 集中日志平台，开发中使用 AI 辅助，通过 HTTP 接口接入整机全部四个子系统，提供设备注册、日志查询与筛选，使历史任务日志可回溯，支撑跨子系统联调。
+      - 开展全图基准对照、独立实现交叉验证及设备联调；维护启动与操作文档，帮助测试同事自主恢复程序运行。与测试同事基于固定 GDS 测试库开展人工回归验证。
       cv_details:
-        - "提出边界稀疏亚像素光栅化路线，将核心算法由 Python 移植至 C++ 并迁移至六节点服务器。同一 GDS 输入、4-pass 工作负载实测由 800 分钟降至 24 分钟，约 33.3 倍端到端加速（含平台变化）。"
-        - "按节点分块读取使同硬件、同节点数测试由 92 分钟降至 44 分钟；通过分块计算、初始化预分配及缓冲区复用，解决 256 GB 节点 OOM，将单节点峰值内存控制在 120 GB 以下。"
-        - "设计计算与设备加工并行的在线流水线，基于共享文件系统、双向背压与数据就绪信号协调生产消费；持久化任务进度，支持断点续算并完成中断、重启恢复验证。"
-        - "开发 FastAPI 集中日志平台，接入整机全部 4 个子系统，实现任务日志持久化与按设备、任务查询，支持联调排障。"
-        - "协调开发分工与设备端接口协同，负责核心代码维护及复杂问题定位；维护启动、操作文档并支持远程维护，与测试同事基于固定 GDS 测试库开展人工回归验证。"
+      - 在六人团队中承担核心技术取舍与任务协作。从同事的 Python 原型接手，提出边界稀疏光栅化，主导 C++ / OpenMP 及多节点实现。
+      - 通过循环融合及火焰图指导的 Clipper2 专项优化，同六节点、同数据下将 4-pass 耗时由 44 降至 24 分钟，下降约 45%；24 分钟含校正与格式转换。
+      - 通过分块计算、预分配及缓冲区复用，解决 256 GB 节点 OOM；优化后观察到运行内存低于 120 GB。推进计算与读写重叠，减少中间数据。
+      - 提出边计算边加工的数据流水线，以共享文件系统就绪信号及双向等待协调生产消费；保存条带级状态，支持计算侧断点续算，已做中断恢复测试。
+      - 开发 FastAPI 日志平台，接入整机全部四个子系统。维护启动、操作文档并支持远程维护，协同测试同事基于固定 GDS 库开展人工回归。
     - period: "2024.04–2024.08"
       title: "算法研发"
       organization: "禾赛科技 / Sharpa 相关研发"
@@ -262,3 +284,12 @@ zh:
   engineering: "从计算性能到稳定运行"
   benchmark_details: "性能演进与测试口径"
   verification: "验证与维护"
+  cv_summary: "算法工程师，承担计算光刻软件核心链路的技术牵头职责，覆盖边界稀疏算法、C++ 性能优化、多节点运行与可恢复的数据交付。早稻田大学机械工程硕士，具有多机器人人机交互与视触觉研究经历。"
+  highlights_title: "工作亮点"
+  highlights:
+  - title: 技术牵头与协作
+    text: 在六人团队中承担核心链路的技术取舍、任务拆分和设备接口协同，推进关键模块研发。
+  - title: 算法设计与性能优化
+    text: 提出边界稀疏计算，结合循环融合、火焰图分析与 Clipper2 专项优化，降低完整任务耗时。
+  - title: 设备协同与维护支持
+    text: 实现边计算边加工与计算侧断点恢复，以集中日志、启动及操作文档支撑联调和远程维护。

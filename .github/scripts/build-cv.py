@@ -28,7 +28,6 @@ pdfmetrics.registerFontFamily('CV-Regular', normal='CV-Regular', bold='CV-Bold',
 COPY = {
 'en': {
  'name':'Miaohui Shi', 'role':'Algorithm Engineer | High-performance Computing & Robotics',
- 'intro':'Algorithm engineer developing C++ / Python software for computational lithography, with experience in performance optimization, distributed data pipelines and equipment diagnostics. M.S. from Waseda University; research in HRI and tactile sensing.',
  'work':'PROFESSIONAL EXPERIENCE', 'education':'EDUCATION', 'skills':'TECHNICAL SKILLS', 'earlier':'EARLIER ACADEMIC EXPERIENCE',
  'research':'SELECTED RESEARCH',
  'projects':[
@@ -40,7 +39,6 @@ COPY = {
 },
 'zh': {
  'name':'施妙辉', 'role':'算法工程师 | 高性能计算与机器人研究',
- 'intro':'现任台州光电产业创新中心算法工程师，开发计算光刻 C++ / Python 软件，关注计算性能、分布式数据流水线与设备诊断。早稻田大学机械工程硕士，具有多机器人人机交互与视触觉研究经历。',
  'work':'工作经历', 'education':'教育背景', 'skills':'技术能力', 'earlier':'早期学术经历',
  'research':'代表性研究',
  'projects':[
@@ -135,7 +133,7 @@ class Resume:
                  size=8.4, leading=12, color=MUTED, raw=True, gap=9)
         self.line(self.y)
         self.y += 12
-        self.add(self.c['intro'], size=self.body_size, leading=self.leading, gap=12)
+        self.add(self.ui['cv_summary'], size=self.body_size, leading=self.leading, gap=12)
 
     def section(self, label):
         self.y += 6
@@ -145,14 +143,8 @@ class Resume:
         self.y += 23
 
     def metrics(self):
-        items = [
-            ('800 → 24 min', 'GDS 端到端耗时' if self.lang=='zh' else 'GDS end-to-end runtime',
-             '约 33.3× · 含硬件与部署变化' if self.lang=='zh' else '33.3× incl. platform changes'),
-            ('< 120 GB', '单节点峰值内存' if self.lang=='zh' else 'Peak memory per node',
-             '分块与复用 · 解决 256 GB OOM' if self.lang=='zh' else 'Resolved OOM on 256 GB nodes'),
-            ('4 / 4', '整机子系统日志接入' if self.lang=='zh' else 'Subsystems with unified logs',
-             'FastAPI · 任务日志持久化' if self.lang=='zh' else 'FastAPI · persistent task logs'),
-        ]
+        items = [(m.get('cv_value', m['value']), m['cv_label'], m['cv_context'])
+                 for m in self.ui['metrics']]
         gap=10
         col=(CW-2*gap)/3
         top=self.y
@@ -239,8 +231,8 @@ class Resume:
                         'CN119987127B | Subpixel image processing based on grid-partitioned mask regions')
         self.add(self.link(patent_title, 'https://patents.google.com/patent/CN119987127B/zh'),
                  raw=True,size=9.0,leading=13,bold=True,gap=3)
-        self.add('共同发明人 | 2026-03-20 授权' if self.lang == 'zh' else
-                 'Co-inventor | Granted 20 March 2026',size=8.2,leading=12,color=MUTED,gap=4)
+        self.add('列名第四发明人 | 2026-03-20 授权' if self.lang == 'zh' else
+                 'Co-inventor (fourth listed) | Granted 20 March 2026',size=8.2,leading=12,color=MUTED,gap=4)
         self.add(self.link('完整专利记录 / 8 项申请' if self.lang=='zh' else 'Full patent record / 8 applications',
                            BASE+('/zh/patents/' if self.lang=='zh' else '/patents/')),
                  raw=True,size=8.2,leading=12,gap=6)
