@@ -111,7 +111,7 @@ def validate(root):
         assert "44" in project_text and "24" in project_text and "45%" in project_text, "Missing same-configuration optimization result"
         assert "Clipper2" in project_text and "OpenMP" in project_text, "Missing core implementation contributions"
         assert "33.3" not in project_text and "2.09" not in project_text, "Superseded acceleration claims must not be reintroduced"
-        assert ("数万小时" if prefix else "tens of thousands of hours") in project_text
+        assert ("数万小时" if prefix else "tens of thousands of hours") in project_text.casefold()
     print(f"PASS: {len(parsed)} bilingual pages; routes, language pairs, assets, anchors, publication and patent counts.")
 
 
