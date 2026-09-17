@@ -10,9 +10,6 @@
   </div>
   <div class="hero-portrait"><img class="portrait" src="{{ '/images/avatar-anime.png' | relative_url }}" alt="{% if lang == 'zh' %}施妙辉的二次元头像{% else %}Anime-style portrait of Miaohui Shi{% endif %}" width="1086" height="1448"><p class="portrait-caption">{{ ui.location }}</p></div>
 </section>
-<div class="metric-grid">
-  {% for metric in ui.metrics %}<div class="metric"><strong>{{ metric.value | escape }}</strong><span>{{ metric.label }}</span><small>{{ metric.context }}</small></div>{% endfor %}
-</div>
 <section class="section" aria-labelledby="work-highlights">
   <div class="section-heading"><h2 id="work-highlights">{{ ui.highlights_title }}</h2></div>
   <div class="project-grid">
