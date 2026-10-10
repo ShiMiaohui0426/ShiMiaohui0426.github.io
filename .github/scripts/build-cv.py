@@ -19,7 +19,7 @@ ROOT = Path(__file__).resolve().parents[2]
 DATA = yaml.safe_load((ROOT / '_data/profile.yml').read_text(encoding='utf-8'))
 PAPERS = yaml.safe_load((ROOT / '_data/papers.yml').read_text(encoding='utf-8'))
 BASE = 'https://shimiaohui0426.github.io'
-UPDATED = '2026-09-17'
+UPDATED = '2026-10-10'
 FONT_DIR = ROOT / '.github/fonts'
 for weight in ('Regular', 'Bold'):
     pdfmetrics.registerFont(TTFont('CV-' + weight, str(FONT_DIR / f'NotoSansSC-CV-{weight}.ttf')))
@@ -34,8 +34,7 @@ COPY = {
   ('Multi-robot interaction, attention and automation | CASE 2024', 'Independently developed the experimental system (excluding the mechanical-head module), designed and conducted the experiments, and completed all data analysis. Adapted the PASAT auditory-addition task to a dual-task study involving three robotic arms, with NASA-TLX and user-experience measures.'),
   ('High-speed vision-based tactile sensing | ICAT-EGVE 2024', 'Independently developed algorithmic principles, implementation, performance tuning and the front-end UI. The method combines local sparse marker tracking with force estimation using an asymmetric stiffness-coefficient matrix. The paper reports 601.25 Hz sensor-system force acquisition; this is not a standalone algorithm benchmark.')],
  'papers':'PUBLICATIONS', 'patents':'PATENTS',
- 'interest':'RESEARCH DIRECTION', 'interest_text':'Future doctoral research interest: household service robots, tactile perception, human-robot collaboration and appropriate automation. Industry interests include EDA, computational lithography and high-performance algorithm engineering.',
- 'foot':'Updated 17 Sep 2026 | Runtime benchmarks recorded in 2024-2025',
+ 'foot':'Updated 10 Oct 2026 | Runtime benchmarks recorded in 2024-2025',
 },
 'zh': {
  'name':'施妙辉', 'role':'算法工程师 | 高性能计算与机器人研究',
@@ -45,8 +44,7 @@ COPY = {
   ('多机器人人机交互、注意力与自动化 | CASE 2024','独立完成实验系统开发（机械头模块除外）、实验设计与实施及全部数据分析。将心理学中的 PASAT 听觉连续加法任务引入三台机械臂的双任务实验，结合 NASA-TLX 工作负荷和用户体验问卷评估不同自动化等级。'),
   ('高速视触觉感知算法与软件 | ICAT-EGVE 2024','独立完成算法原理设计、代码实现、性能调优及前端 UI。通过帧间局部稀疏标记点搜索与非对称刚度系数矩阵进行力估计。论文报告系统力信息采集速率为 601.25 Hz，此数值并非单独算法的性能基准。')],
  'papers':'发表论文', 'patents':'专利成果',
- 'interest':'研究方向', 'interest_text':'未来博士研究兴趣：家庭服务机器人、触觉感知、人机协作与适度自动化。产业方向关注 EDA、计算光刻与高性能算法工程。',
- 'foot':'更新于 2026-09-17 | 耗时基准记录于 2024-2025 年',
+ 'foot':'更新于 2026-10-10 | 耗时基准记录于 2024-2025 年',
 }}
 
 # A4, generous outer margins, one reading column and restrained teal accents.
@@ -239,8 +237,6 @@ class Resume:
         self.section(self.c['earlier'])
         for e in self.ui['earlier_entries']:
             self.add(e['period']+'  |  '+e['title'],size=8.2,leading=12,gap=3)
-        self.section(self.c['interest'])
-        self.add(self.c['interest_text'],size=8.8,leading=13,gap=0)
 
     def footer(self):
         print(f'{self.lang.upper()} page {self.page}: content bottom {self.y:.1f} pt / {H-48:.1f} pt')
